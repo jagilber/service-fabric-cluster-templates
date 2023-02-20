@@ -23,6 +23,6 @@ For more info, see:
 
 - [Service Fabric managed cluster overview](https://docs.microsoft.com/azure/service-fabric/overview-managed-cluster) for details on managed clusters.
 
-- [Service Fabric managed cluster template format](https://docs.microsoft.com/azure/templates/microsoft.servicefabric/2022-10-01-preview/managedclusters) for more details on modifying this ARM template to meet your requirements.
+- [Service Fabric managed cluster template format](https://docs.microsoft.com/azure/templates/microsoft.servicefabric/2022-08-01-preview/managedclusters) for more details on modifying this ARM template to meet your requirements.
 
 - [List Azure Role Definitions](https://docs.microsoft.com/azure/role-based-access-control/role-definitions-list) for additional information about Role Definitions and Assignments.

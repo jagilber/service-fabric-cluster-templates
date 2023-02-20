@@ -89,7 +89,7 @@
     "resources": [
         {
             "type": "Microsoft.ServiceFabric/managedclusters",
-            "apiVersion": "2022-10-01-preview",
+            "apiVersion": "2022-08-01-preview",
             "name": "[parameters('clusterName')]",
             "dependsOn": [],
             "sku": {
@@ -112,7 +112,7 @@
         },
         {
             "type": "Microsoft.ServiceFabric/managedclusters/nodetypes",
-            "apiVersion": "2022-10-01-preview",
+            "apiVersion": "2022-08-01-preview",
             "name": "[concat(parameters('clusterName'), '/', parameters('nodeTypeName'))]",
             "dependsOn": [
                 "[concat('Microsoft.ServiceFabric/managedclusters/', parameters('clusterName'))]"

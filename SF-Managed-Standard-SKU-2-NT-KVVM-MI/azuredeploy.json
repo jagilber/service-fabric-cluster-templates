@@ -282,7 +282,7 @@
             }
         },
         {
-            "apiVersion": "2022-10-01-preview",
+            "apiVersion": "2022-08-01-preview",
             "type": "Microsoft.ServiceFabric/managedclusters",
             "name": "[parameters('clusterName')]",
             "location": "[resourcegroup().location]",
@@ -313,7 +313,7 @@
             }
         },
         {
-            "apiVersion": "2022-10-01-preview",
+            "apiVersion": "2022-08-01-preview",
             "type": "Microsoft.ServiceFabric/managedclusters/nodetypes",
             "name": "[concat(parameters('clusterName'), '/', parameters('nodeType1Name'))]",
             "location": "[resourcegroup().location]",
