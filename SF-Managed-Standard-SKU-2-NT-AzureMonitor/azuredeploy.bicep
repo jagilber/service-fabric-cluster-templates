@@ -2,10 +2,10 @@
 param location string = resourceGroup().location
 
 @secure()
-param adminPassword string = ''
-param adminUserName string = ''
-param clientCertificateThumbprint string = ''
-param clusterName string = ''
+param adminPassword string
+param adminUserName string
+param clientCertificateThumbprint string
+param clusterName string
 param nodeType1DataDiskSizeGB int = 256
 
 @allowed([

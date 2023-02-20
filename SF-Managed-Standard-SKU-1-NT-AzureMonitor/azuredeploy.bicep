@@ -2,13 +2,13 @@
 param location string = resourceGroup().location
 
 @secure()
-param adminPassword string = ''
-param adminUserName string = ''
-param clusterName string = ''
+param adminPassword string
+param adminUserName string
+param clusterName string
 param dataDiskSizeGB int = 256
-param clientCertificateThumbprint string = ''
+param clientCertificateThumbprint string
 param vmInstanceCount int = 5
-param vmSize string = ''
+param vmSize string = 'Standard_D2s_v3'
 
 var nodeTypeName = 'nodetype1'
 

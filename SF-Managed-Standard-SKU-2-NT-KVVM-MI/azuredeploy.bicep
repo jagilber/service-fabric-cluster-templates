@@ -99,11 +99,11 @@ param secretsPermissions array = [
 ]
 
 @description('subscription specific. ps Get-AzADServicePrincipal -DisplayName \'Azure Service Fabric Resource Provider\'')
-param sfrpProviderGuid string = ''
+param sfrpProviderGuid string
 param userAssignedIdentityName string = '${resourceGroup().name}UserAssignedIdentity'
 
 @description('ps [guid]::newguid() one time. https://docs.microsoft.com/en-us/azure/service-fabric/how-to-managed-identity-managed-cluster-virtual-machine-scale-sets')
-param vmIdentityRoleNameGuid string = ''
+param vmIdentityRoleNameGuid string
 param nodeType1DataDiskSizeGB int = 256
 
 @allowed([

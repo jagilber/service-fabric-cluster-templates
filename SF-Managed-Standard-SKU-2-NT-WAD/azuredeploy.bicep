@@ -2,10 +2,10 @@
 param location string = resourceGroup().location
 
 @secure()
-param adminPassword string = ''
-param adminUserName string = ''
-param clientCertificateThumbprint string = ''
-param clusterName string = ''
+param adminPassword string
+param adminUserName string
+param clientCertificateThumbprint string
+param clusterName string
 param nodeType1DataDiskSizeGB int = 256
 
 @allowed([
@@ -34,14 +34,14 @@ param nodeType2VmInstanceCount int = 3
 param nodeType2VmSize string = 'Standard_D2s_v3'
 
 @description('generate guid one time and reuse for same assignment: [guid]::NewGuid() ')
-param roleAssignmentId string = ''
+param roleAssignmentId string
 
 @description('https://docs.microsoft.com/azure/role-based-access-control/role-definitions-list \'Managed Identity Operator\' read and assign')
 param roleDefinitionId string = 'f1a07417-d97a-45cb-824c-7a7467783830'
 param storageAccountName string = 'sfmcevts${uniqueString(resourceGroup().id)}'
 
 @description('to enumerate tenant specific SFRP guid: Select-AzSubscription -SubscriptionId {{subscription id}}; Get-AzADServicePrincipal -DisplayName \'Azure Service Fabric Resource Provider\'')
-param subscriptionSFRPId string = ''
+param subscriptionSFRPId string
 param userAssignedIdentity string = 'sfmcevts'
 
 var dataDiskLetter = 'S'
