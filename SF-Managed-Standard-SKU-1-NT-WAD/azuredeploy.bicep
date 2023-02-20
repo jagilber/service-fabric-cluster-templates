@@ -1,3 +1,6 @@
+@description('Resource Group')
+param location string = resourceGroup().location
+
 @secure()
 param adminPassword string = ''
 param adminUserName string = ''
@@ -32,12 +35,12 @@ resource roleAssignmentID_resource 'Microsoft.Authorization/roleAssignments@2020
 
 resource userAssignedIdentity_resource 'Microsoft.ManagedIdentity/userAssignedIdentities@2018-11-30' = {
   name: userAssignedIdentity
-  location: resourceGroup().location
+  location: location
 }
 
 resource cluster 'Microsoft.ServiceFabric/managedClusters@2022-01-01' = {
   name: clusterName
-  location: resourceGroup().location
+  location: location
   sku: {
     name: 'Standard'
   }
@@ -66,7 +69,7 @@ resource cluster 'Microsoft.ServiceFabric/managedClusters@2022-01-01' = {
 
 resource storageAccount 'Microsoft.Storage/storageAccounts@2021-08-01' = {
   name: storageAccountName
-  location: resourceGroup().location
+  location: location
   properties: {
   }
   kind: 'StorageV2'

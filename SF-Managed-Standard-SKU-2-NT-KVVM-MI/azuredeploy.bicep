@@ -1,3 +1,6 @@
+@description('Resource Group')
+param location string = resourceGroup().location
+
 @secure()
 param adminPassword string
 param adminUserName string = 'vmadmin'
@@ -153,7 +156,7 @@ module nestedTemplate './keyvaultAccessPolicy.bicep' = if (updateKeyvault == boo
 
 resource userAssignedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2018-11-30' = {
   name: userAssignedIdentityName
-  location: resourceGroup().location
+  location: location
 }
 
 resource vmIdentityRoleNameGuid_resource 'Microsoft.Authorization/roleAssignments@2020-04-01-preview' = {
@@ -167,7 +170,7 @@ resource vmIdentityRoleNameGuid_resource 'Microsoft.Authorization/roleAssignment
 
 resource cluster 'Microsoft.ServiceFabric/managedclusters@2022-08-01-preview' = {
   name: clusterName
-  location: resourceGroup().location
+  location: location
   sku: {
     name: clusterSku
   }

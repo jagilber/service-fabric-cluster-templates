@@ -1,3 +1,6 @@
+@description('Resource Group')
+param location string = resourceGroup().location
+
 @description('Name of your cluster - Between 3 and 23 characters. Letters and numbers only')
 @minLength(4)
 @maxLength(23)
@@ -52,7 +55,7 @@ param publicLoadBalancerNatPoolId string
 
 resource cluster 'Microsoft.ServiceFabric/managedclusters@2022-08-01-preview' = {
   name: clusterName
-  location: resourceGroup().location
+  location: location
   sku: {
     name: clusterSku
   }

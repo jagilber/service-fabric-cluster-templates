@@ -1,3 +1,6 @@
+@description('Resource Group')
+param location string = resourceGroup().location
+
 @secure()
 param adminPassword string = ''
 param adminUserName string = ''
@@ -11,7 +14,7 @@ var nodeTypeName = 'nodetype1'
 
 resource cluster 'Microsoft.ServiceFabric/managedClusters@2022-01-01' = {
   name: clusterName
-  location: resourceGroup().location
+  location: location
   sku: {
     name: 'Standard'
   }

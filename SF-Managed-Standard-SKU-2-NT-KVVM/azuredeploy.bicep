@@ -1,3 +1,6 @@
+@description('Resource Group')
+param location string = resourceGroup().location
+
 @secure()
 param adminPassword string
 param adminUserName string = 'vmadmin'
@@ -46,7 +49,7 @@ param nodeType2VmSize string = 'Standard_D2s_v3'
 
 resource cluster 'Microsoft.ServiceFabric/managedclusters@2022-08-01-preview' = {
   name: clusterName
-  location: resourceGroup().location
+  location: location
   sku: {
     name: clusterSku
   }

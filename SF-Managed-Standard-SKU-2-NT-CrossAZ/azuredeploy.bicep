@@ -1,3 +1,6 @@
+@description('Resource Group')
+param location string = resourceGroup().location
+
 @description('Name of your cluster - Between 3 and 23 characters. Letters and numbers only')
 @minLength(4)
 @maxLength(23)
@@ -46,7 +49,7 @@ param vmImageVersion string = 'latest'
 
 resource cluster 'Microsoft.ServiceFabric/managedclusters@2022-08-01-preview' = {
   name: clusterName
-  location: resourceGroup().location
+  location: location
   sku: {
     name: clusterSku
   }
@@ -77,7 +80,7 @@ resource cluster 'Microsoft.ServiceFabric/managedclusters@2022-08-01-preview' = 
 resource clusterName_nodeType1 'Microsoft.ServiceFabric/managedclusters/nodetypes@2022-08-01-preview' = {
   parent: cluster
   name: '${nodeType1Name}'
-  location: resourceGroup().location
+  location: location
   properties: {
     isPrimary: true
     vmImagePublisher: vmImagePublisher
@@ -94,7 +97,7 @@ resource clusterName_nodeType1 'Microsoft.ServiceFabric/managedclusters/nodetype
 resource clusterName_nodeType2 'Microsoft.ServiceFabric/managedclusters/nodetypes@2022-08-01-preview' = {
   parent: cluster
   name: '${nodeType2Name}'
-  location: resourceGroup().location
+  location: location
   properties: {
     isPrimary: false
     vmImagePublisher: vmImagePublisher
