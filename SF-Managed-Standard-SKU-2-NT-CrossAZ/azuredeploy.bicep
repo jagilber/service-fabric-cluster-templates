@@ -59,7 +59,7 @@ resource cluster 'Microsoft.ServiceFabric/managedclusters@2022-08-01-preview' = 
     adminPassword: adminPassword
     clientConnectionPort: 19000
     httpGatewayConnectionPort: 19080
-    zonalResiliency: 'true'
+    zonalResiliency: true
     clients: [
       {
         isAdmin: true
@@ -79,8 +79,7 @@ resource cluster 'Microsoft.ServiceFabric/managedclusters@2022-08-01-preview' = 
 
 resource clusterName_nodeType1 'Microsoft.ServiceFabric/managedclusters/nodetypes@2022-08-01-preview' = {
   parent: cluster
-  name: '${nodeType1Name}'
-  location: location
+  name: nodeType1Name
   properties: {
     isPrimary: true
     vmImagePublisher: vmImagePublisher
@@ -96,8 +95,7 @@ resource clusterName_nodeType1 'Microsoft.ServiceFabric/managedclusters/nodetype
 
 resource clusterName_nodeType2 'Microsoft.ServiceFabric/managedclusters/nodetypes@2022-08-01-preview' = {
   parent: cluster
-  name: '${nodeType2Name}'
-  location: location
+  name: nodeType2Name
   properties: {
     isPrimary: false
     vmImagePublisher: vmImagePublisher

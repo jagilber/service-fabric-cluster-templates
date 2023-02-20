@@ -45,7 +45,7 @@ resource cluster 'Microsoft.ServiceFabric/managedClusters@2022-01-01' = {
 
 resource clusterName_nodeType 'Microsoft.ServiceFabric/managedClusters/nodetypes@2022-01-01' = {
   parent: cluster
-  name: '${nodeTypeName}'
+  name: nodeTypeName
   properties: {
     isPrimary: true
     vmImagePublisher: 'MicrosoftWindowsServer'

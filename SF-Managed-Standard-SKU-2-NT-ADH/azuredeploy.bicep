@@ -40,7 +40,7 @@ resource cluster 'Microsoft.ServiceFabric/managedclusters@2022-08-01-preview' = 
 
 resource clusterName_nodeType 'Microsoft.ServiceFabric/managedclusters/nodetypes@2022-08-01-preview' = {
   parent: cluster
-  name: '${nodeTypeName}'
+  name: nodeTypeName
   properties: {
     isPrimary: true
     vmImagePublisher: vmImagePublisher
@@ -60,7 +60,7 @@ resource clusterName_nodeType 'Microsoft.ServiceFabric/managedclusters/nodetypes
 
 resource clusterName_nodeType2 'Microsoft.ServiceFabric/managedclusters/nodetypes@2022-08-01-preview' = {
   parent: cluster
-  name: '${nodeTypeName2}'
+  name: nodeTypeName2
   properties: {
     isPrimary: false
     vmImagePublisher: vmImagePublisher

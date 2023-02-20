@@ -1,3 +1,6 @@
+@description('Resource Group')
+param location string = resourceGroup().location
+
 param clusterName string
 
 @maxLength(9)
@@ -6,7 +9,7 @@ param enableAutoScale bool = true
 
 resource clusterName_nodeType2 'Microsoft.Insights/autoscaleSettings@2015-04-01' = {
   name: '${clusterName}-${nodeType2Name}'
-  location: resourceGroup().location
+  location: location
   properties: {
     name: '${clusterName}-${nodeType2Name}'
     targetResourceUri: '/subscriptions/${subscription().subscriptionId}/resourceGroups/${resourceGroup().name}/providers/Microsoft.ServiceFabric/managedclusters/${clusterName}/nodetypes/${nodeType2Name}'

@@ -74,8 +74,7 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-08-01' = {
   }
   kind: 'StorageV2'
   sku: {
-    name: 'Standard_RAGRS'
-    tier: 'Standard'
+    name: 'Standard_LRS'
   }
   tags: {
     resourceType: 'Service Fabric'
@@ -86,7 +85,7 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-08-01' = {
 
 resource clusterName_nodeType 'Microsoft.ServiceFabric/managedClusters/nodetypes@2022-01-01' = {
   parent: cluster
-  name: '${nodeTypeName}'
+  name: nodeTypeName
   properties: {
     isPrimary: true
     vmImagePublisher: 'MicrosoftWindowsServer'
@@ -125,6 +124,7 @@ resource clusterName_nodeType 'Microsoft.ServiceFabric/managedClusters/nodetypes
           protectedSettings: {
             storageAccountName: storageAccountName
             storageAccountKey: listKeys(storageAccount.id, '2015-05-01-preview').key1
+            #disable-next-line no-hardcoded-env-urls
             storageAccountEndPoint: 'https://core.windows.net/'
           }
           publisher: 'Microsoft.Azure.Diagnostics'

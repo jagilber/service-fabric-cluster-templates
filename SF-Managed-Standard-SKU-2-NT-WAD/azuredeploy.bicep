@@ -50,7 +50,7 @@ resource roleAssignmentID_resource 'Microsoft.Authorization/roleAssignments@2020
   scope: userAssignedIdentity_resource
   name: roleAssignmentId
   properties: {
-    roleDefinitionId: '/subscriptions/${subscription().subscriptionId}/providers/Microsoft.Authorization/roleDefinitions/${roleDefinitionId}'
+    roleDefinitionId: reference('/subscriptions/${subscription().subscriptionId}/providers/Microsoft.Authorization/roleDefinitions/${roleDefinitionId}', '2022-04-01').id
     principalId: subscriptionSFRPId
   }
 }
@@ -96,8 +96,7 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-08-01' = {
   }
   kind: 'StorageV2'
   sku: {
-    name: 'Standard_RAGRS'
-    tier: 'Standard'
+    name: 'Standard_LRS'
   }
   tags: {
     resourceType: 'Service Fabric'
@@ -108,7 +107,7 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-08-01' = {
 
 resource clusterName_nodeType1 'Microsoft.ServiceFabric/managedClusters/nodetypes@2022-01-01' = {
   parent: cluster
-  name: '${nodeType1Name}'
+  name: nodeType1Name
   properties: {
     isPrimary: true
     vmImagePublisher: 'MicrosoftWindowsServer'
@@ -147,6 +146,7 @@ resource clusterName_nodeType1 'Microsoft.ServiceFabric/managedClusters/nodetype
           protectedSettings: {
             storageAccountName: storageAccountName
             storageAccountKey: listKeys(storageAccount.id, '2015-05-01-preview').key1
+            #disable-next-line no-hardcoded-env-urls
             storageAccountEndPoint: 'https://core.windows.net/'
           }
           publisher: 'Microsoft.Azure.Diagnostics'
@@ -324,7 +324,7 @@ resource clusterName_nodeType1 'Microsoft.ServiceFabric/managedClusters/nodetype
 
 resource clusterName_nodeType2 'Microsoft.ServiceFabric/managedClusters/nodetypes@2022-01-01' = {
   parent: cluster
-  name: '${nodeType2Name}'
+  name: nodeType2Name
   properties: {
     isPrimary: false
     vmImagePublisher: 'MicrosoftWindowsServer'
@@ -363,6 +363,7 @@ resource clusterName_nodeType2 'Microsoft.ServiceFabric/managedClusters/nodetype
           protectedSettings: {
             storageAccountName: storageAccountName
             storageAccountKey: listKeys(storageAccount.id, '2015-05-01-preview').key1
+            #disable-next-line no-hardcoded-env-urls
             storageAccountEndPoint: 'https://core.windows.net/'
           }
           publisher: 'Microsoft.Azure.Diagnostics'
