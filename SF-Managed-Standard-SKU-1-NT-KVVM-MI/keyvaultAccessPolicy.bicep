@@ -1,5 +1,5 @@
-param resourceId_Microsoft_ManagedIdentity_userAssignedIdentities_parameters_userAssignedIdentityName object
-param variables_keyVaultName ? /* TODO: fill in correct type */
+param userAssignedIdentity object
+param keyVaultName string
 
 @description('Specifies the permissions to keys in the vault. Valid values are: all, encrypt, decrypt, wrapKey, unwrapKey, sign, verify, get, list, create, update, import, delete, backup, restore, recover, and purge.')
 @allowed([
@@ -63,13 +63,13 @@ param secretsPermissions array
 ])
 param certificatePermissions array
 
-resource variables_keyVaultName_add 'Microsoft.KeyVault/vaults/accessPolicies@2019-09-01' = {
-  name: '${variables_keyVaultName}/add'
+resource keyVaultAccessPolicy 'Microsoft.KeyVault/vaults/accessPolicies@2019-09-01' = {
+  name: '${keyVaultName}/add'
   properties: {
     accessPolicies: [
       {
         tenantId: subscription().tenantId
-        objectId: resourceId_Microsoft_ManagedIdentity_userAssignedIdentities_parameters_userAssignedIdentityName.principalId
+        objectId: userAssignedIdentity.principalId
         permissions: {
           keys: keysPermissions
           secrets: secretsPermissions

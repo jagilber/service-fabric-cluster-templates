@@ -25,7 +25,7 @@ resource roleAssignmentID_resource 'Microsoft.Authorization/roleAssignments@2020
   scope: userAssignedIdentity_resource
   name: roleAssignmentId
   properties: {
-    roleDefinitionId: '/subscriptions/${subscription().subscriptionId}/providers/Microsoft.Authorization/roleDefinitions/${roleDefinitionId}'
+    roleDefinitionId: reference('/subscriptions/${subscription().subscriptionId}/providers/Microsoft.Authorization/roleDefinitions/${roleDefinitionId}', '2022-04-01').id
     principalId: subscriptionSFRPId
   }
 }
