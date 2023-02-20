@@ -2,6 +2,7 @@
 param adminPassword string
 param adminUserName string = 'vmadmin'
 
+#disable-next-line no-hardcoded-env-urls
 @description('https://<vault name>.vault.azure.net/secrets/<certificate Name>')
 param certificateUrls array
 param clientCertificateThumbprint string
@@ -132,7 +133,6 @@ resource clusterName_nodeType1 'Microsoft.ServiceFabric/managedclusters/nodetype
 resource clusterName_nodeType2 'Microsoft.ServiceFabric/managedClusters/nodetypes@2022-01-01' = {
   parent: cluster
   name: '${nodeType2Name}'
-  location: resourceGroup().location
   properties: {
     isPrimary: false
     vmImagePublisher: 'MicrosoftWindowsServer'
