@@ -142,7 +142,7 @@ var kvSubIndexStart = (updateKeyvault ? (indexOf(keyVaultResourceId, '/subscript
 var kvSubIndexEnd = (updateKeyvault ? indexOf(keyVaultResourceId, '/resourceGroups/') : 0)
 var keyvaultSubscriptionId = substring(keyVaultResourceId, kvSubIndexStart, (kvSubIndexEnd - kvSubIndexStart))
 
-module nestedTemplate './keyvaultAccessPolicy.bicep' = if (updateKeyvault == bool('true')) {
+module nestedTemplate './nested_keyvaultAccessPolicy.bicep' = if (updateKeyvault == bool('true')) {
   name: 'nestedTemplate'
   scope: resourceGroup(keyvaultSubscriptionId, keyvaultResourceGroup)
   params: {
