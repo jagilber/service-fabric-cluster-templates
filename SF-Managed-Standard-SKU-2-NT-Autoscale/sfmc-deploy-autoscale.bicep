@@ -1,4 +1,4 @@
-@description('Resource Group')
+@description('Region')
 param location string = resourceGroup().location
 
 param clusterName string
