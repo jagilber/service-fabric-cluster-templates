@@ -26,5 +26,5 @@ For more info, see:
 
 - [Service Fabric managed clusters spanning availability zones](https://docs.microsoft.com/azure/service-fabric/how-to-managed-cluster-availability-zones) for more details on availability zone spanning.
 
-- [Service Fabric managed cluster template format](https://docs.microsoft.com/azure/templates/microsoft.servicefabric/2021-05-01/managedclusters) for more details on modifying this ARM template to meet your requirements.
+- [Service Fabric managed cluster template format](https://docs.microsoft.com/azure/templates/microsoft.servicefabric/2022-10-01-preview/managedclusters) for more details on modifying this ARM template to meet your requirements.
 

@@ -40,7 +40,7 @@
       "defaultValue": "",
       "type": "string",
       "metadata": {
-        "description":"to enumerate tenant specific SFRP guid: Select-AzSubscription -SubscriptionId {{subscription id}}; Get-AzADServicePrincipal -DisplayName 'Azure Service Fabric Resource Provider'"
+        "description": "to enumerate tenant specific SFRP guid: Select-AzSubscription -SubscriptionId {{subscription id}}; Get-AzADServicePrincipal -DisplayName 'Azure Service Fabric Resource Provider'"
       }
     },
     "storageAccountName": {

@@ -101,7 +101,7 @@
               },
               "backendPort": 8080,
               "enableFloatingIP": "false",
-              "disableOutboundSNAT" : "true",
+              "disableOutboundSNAT": "true",
               "frontendIPConfiguration": {
                 "id": "[concat(variables('lbID'), '/frontendIPConfigurations/LoadBalancerIPConfig')]"
               },

@@ -192,7 +192,6 @@
         }
     },
     "variables": {
-        "sfApiVersion": "2022-06-01-preview",
         "msiApiVersion": "2018-11-30",
         "updateKeyvault": "[greater(length(parameters('keyVaultResourceId')), 0)]",
         "kvIndexStart": "[if(variables('updateKeyvault'), add(lastIndexOf(parameters('keyVaultResourceId'),'/'), 1), 0)]",
@@ -273,7 +272,7 @@
             }
         },
         {
-            "apiVersion": "[variables('sfApiVersion')]",
+            "apiVersion": "2022-10-01-preview",
             "type": "Microsoft.ServiceFabric/managedclusters",
             "name": "[parameters('clusterName')]",
             "location": "[resourcegroup().location]",
@@ -304,7 +303,7 @@
             }
         },
         {
-            "apiVersion": "[variables('sfApiVersion')]",
+            "apiVersion": "2022-10-01-preview",
             "type": "Microsoft.ServiceFabric/managedclusters/nodetypes",
             "name": "[concat(parameters('clusterName'), '/', parameters('nodeTypeName'))]",
             "location": "[resourcegroup().location]",

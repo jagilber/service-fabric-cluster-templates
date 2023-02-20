@@ -71,23 +71,22 @@
             "defaultValue": "StandardSSD_LRS"
         },
         "sourceVaultValue": {
-          "type": "string"
+            "type": "string"
         },
         "certificate1UrlValue": {
-          "type": "string"
-        }    
+            "type": "string"
+        }
     },
     "variables": {
-        "sfApiVersion": "2021-05-01"
     },
     "resources": [
         {
-            "apiVersion": "[variables('sfApiVersion')]",
+            "apiVersion": "2022-10-01-preview",
             "type": "Microsoft.ServiceFabric/managedclusters",
             "name": "[parameters('clusterName')]",
             "location": "[resourcegroup().location]",
             "sku": {
-                "name" : "[parameters('clusterSku')]"
+                "name": "[parameters('clusterSku')]"
             },
             "properties": {
                 "dnsName": "[toLower(parameters('clusterName'))]",
@@ -95,15 +94,15 @@
                 "adminPassword": "[parameters('adminPassword')]",
                 "clientConnectionPort": 19000,
                 "httpGatewayConnectionPort": 19080,
-                "clients" : [
+                "clients": [
                     {
-                        "isAdmin" : true,
-                        "thumbprint" : "[parameters('clientCertificateThumbprint')]"
+                        "isAdmin": true,
+                        "thumbprint": "[parameters('clientCertificateThumbprint')]"
                     }
                 ],
                 "loadBalancingRules": [
                     {
-                        "frontendPort": 8080, 
+                        "frontendPort": 8080,
                         "backendPort": 8080,
                         "protocol": "tcp",
                         "probeProtocol": "tcp"
@@ -112,12 +111,12 @@
             }
         },
         {
-            "apiVersion": "[variables('sfApiVersion')]",
+            "apiVersion": "2022-10-01-preview",
             "type": "Microsoft.ServiceFabric/managedclusters/nodetypes",
             "name": "[concat(parameters('clusterName'), '/', parameters('nodeType1Name'))]",
             "location": "[resourcegroup().location]",
             "dependsOn": [
-              "[concat('Microsoft.ServiceFabric/managedclusters/', parameters('clusterName'))]"
+                "[concat('Microsoft.ServiceFabric/managedclusters/', parameters('clusterName'))]"
             ],
             "properties": {
                 "isPrimary": true,
@@ -130,19 +129,19 @@
                 "dataDiskSizeGB": "[parameters('nodeType1DataDiskSizeGB')]",
                 "dataDiskType": "[parameters('managedDataDiskType')]",
                 "vmSecrets": [
-                  {
-                    "sourceVault": {
-                      "id": "[parameters('sourceVaultValue')]"
-                    },
-                    "vaultCertificates": [
-                      {
-                        "certificateStore": "My",
-                        "certificateUrl": "[parameters('certificate1UrlValue')]"
-              }
-            ]
-          }
-        ]
-        
+                    {
+                        "sourceVault": {
+                            "id": "[parameters('sourceVaultValue')]"
+                        },
+                        "vaultCertificates": [
+                            {
+                                "certificateStore": "My",
+                                "certificateUrl": "[parameters('certificate1UrlValue')]"
+                            }
+                        ]
+                    }
+                ]
+
             }
         }
     ],
@@ -152,8 +151,8 @@
             "type": "string"
         },
         "clientConnectionEndpoint": {
-             "value": "[concat(reference(parameters('clusterName')).fqdn, ':', reference(parameters('clusterName')).clientConnectionPort)]",
-             "type": "string"
+            "value": "[concat(reference(parameters('clusterName')).fqdn, ':', reference(parameters('clusterName')).clientConnectionPort)]",
+            "type": "string"
         },
         "clusterProperties": {
             "value": "[reference(parameters('clusterName'))]",

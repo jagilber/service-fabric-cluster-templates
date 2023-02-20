@@ -98,16 +98,15 @@
         }
     },
     "variables": {
-        "sfApiVersion": "2022-06-01-preview"
     },
     "resources": [
         {
-            "apiVersion": "[variables('sfApiVersion')]",
+            "apiVersion": "2022-10-01-preview",
             "type": "Microsoft.ServiceFabric/managedclusters",
             "name": "[parameters('clusterName')]",
             "location": "[resourcegroup().location]",
             "sku": {
-                "name" : "[parameters('clusterSku')]"
+                "name": "[parameters('clusterSku')]"
             },
             "properties": {
                 "dnsName": "[toLower(parameters('clusterName'))]",
@@ -115,15 +114,15 @@
                 "adminPassword": "[parameters('adminPassword')]",
                 "clientConnectionPort": 19000,
                 "httpGatewayConnectionPort": 19080,
-                "clients" : [
+                "clients": [
                     {
-                        "isAdmin" : true,
-                        "thumbprint" : "[parameters('clientCertificateThumbprint')]"
+                        "isAdmin": true,
+                        "thumbprint": "[parameters('clientCertificateThumbprint')]"
                     }
                 ],
                 "loadBalancingRules": [
                     {
-                        "frontendPort": 8080, 
+                        "frontendPort": 8080,
                         "backendPort": 8080,
                         "protocol": "tcp",
                         "probeProtocol": "tcp"
@@ -132,12 +131,12 @@
             }
         },
         {
-            "apiVersion": "[variables('sfApiVersion')]",
+            "apiVersion": "2022-10-01-preview",
             "type": "Microsoft.ServiceFabric/managedclusters/nodetypes",
             "name": "[concat(parameters('clusterName'), '/', parameters('nodeType1Name'))]",
             "location": "[resourcegroup().location]",
             "dependsOn": [
-              "[concat('Microsoft.ServiceFabric/managedclusters/', parameters('clusterName'))]"
+                "[concat('Microsoft.ServiceFabric/managedclusters/', parameters('clusterName'))]"
             ],
             "properties": {
                 "isPrimary": true,
@@ -148,17 +147,17 @@
                 "vmSize": "[parameters('nodeType1VmSize')]",
                 "vmInstanceCount": "[parameters('nodeType1VmInstanceCount')]",
                 "dataDiskSizeGB": "[parameters('nodeType1DataDiskSizeGB')]",
-                "dataDiskType": "[parameters('nodeType1managedDataDiskType')]"
+                "dataDiskType": "[parameters('nodeType1managedDataDiskType')]"
 
             }
         },
         {
-            "apiVersion": "[variables('sfApiVersion')]",
+            "apiVersion": "2022-10-01-preview",
             "type": "Microsoft.ServiceFabric/managedclusters/nodetypes",
             "name": "[concat(parameters('clusterName'), '/', parameters('nodeType2Name'))]",
             "location": "[resourcegroup().location]",
             "dependsOn": [
-              "[concat('Microsoft.ServiceFabric/managedclusters/', parameters('clusterName'))]"
+                "[concat('Microsoft.ServiceFabric/managedclusters/', parameters('clusterName'))]"
             ],
             "properties": {
                 "isPrimary": false,
@@ -173,7 +172,7 @@
                 "vmSize": "[parameters('nodeType2VmSize')]",
                 "vmInstanceCount": "[parameters('nodeType2VmInstanceCount')]",
                 "dataDiskSizeGB": "[parameters('nodeType2DataDiskSizeGB')]",
-                "dataDiskType": "[parameters('nodeType2managedDataDiskType')]"
+                "dataDiskType": "[parameters('nodeType2managedDataDiskType')]"
 
             }
         }

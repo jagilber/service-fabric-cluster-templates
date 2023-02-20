@@ -62,12 +62,11 @@
         }
     },
     "variables": {
-        "sfApiVersion": "2022-06-01-preview"
     },
     "resources": [
         {
             "type": "Microsoft.ServiceFabric/managedclusters",
-            "apiVersion": "[variables('sfApiVersion')]",
+            "apiVersion": "2022-10-01-preview",
             "name": "[parameters('clusterName')]",
             "location": "[parameters('clusterLocation')]",
             "sku": {
@@ -79,17 +78,17 @@
                 "adminPassword": "[parameters('adminPassword')]",
                 "clientConnectionPort": 19000,
                 "httpGatewayConnectionPort": 19080,
-                "clients" : [
+                "clients": [
                     {
-                        "isAdmin" : true,
-                        "thumbprint" : "[parameters('clientThumbprint')]"
+                        "isAdmin": true,
+                        "thumbprint": "[parameters('clientThumbprint')]"
                     }
                 ]
             }
         },
         {
             "type": "Microsoft.ServiceFabric/managedclusters/nodetypes",
-            "apiVersion": "[variables('sfApiVersion')]",
+            "apiVersion": "2022-10-01-preview",
             "name": "[concat(parameters('clusterName'), '/', parameters('nodeTypeName'))]",
             "location": "[parameters('clusterLocation')]",
             "dependsOn": [
@@ -111,7 +110,7 @@
         },
         {
             "type": "Microsoft.ServiceFabric/managedclusters/nodetypes",
-            "apiVersion": "[variables('sfApiVersion')]",
+            "apiVersion": "2022-10-01-preview",
             "name": "[concat(parameters('clusterName'), '/', parameters('nodeTypeName2'))]",
             "location": "[parameters('clusterLocation')]",
             "dependsOn": [

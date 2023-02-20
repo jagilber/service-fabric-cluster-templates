@@ -78,11 +78,10 @@
         }
     },
     "variables": {
-        "sfApiVersion": "2022-06-01-preview"
     },
     "resources": [
         {
-            "apiVersion": "[variables('sfApiVersion')]",
+            "apiVersion": "2022-10-01-preview",
             "type": "Microsoft.ServiceFabric/managedclusters",
             "name": "[parameters('clusterName')]",
             "location": "[resourcegroup().location]",
@@ -113,7 +112,7 @@
             }
         },
         {
-            "apiVersion": "[variables('sfApiVersion')]",
+            "apiVersion": "2022-10-01-preview",
             "type": "Microsoft.ServiceFabric/managedclusters/nodetypes",
             "name": "[concat(parameters('clusterName'), '/', parameters('nodeTypeName'))]",
             "location": "[resourcegroup().location]",

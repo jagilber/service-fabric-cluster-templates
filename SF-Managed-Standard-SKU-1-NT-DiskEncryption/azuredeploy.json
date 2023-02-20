@@ -28,7 +28,7 @@
         "clientCertificateThumbprint": {
             "type": "string"
         },
-         "nodeTypeName": {
+        "nodeTypeName": {
             "type": "string",
             "maxLength": 9,
             "defaultValue": "NT1"
@@ -85,16 +85,15 @@
         }
     },
     "variables": {
-        "sfApiVersion": "2021-05-01"
     },
     "resources": [
         {
             "type": "Microsoft.ServiceFabric/managedclusters",
-            "apiVersion": "[variables('sfApiVersion')]",
+            "apiVersion": "2022-10-01-preview",
             "name": "[parameters('clusterName')]",
             "dependsOn": [],
             "sku": {
-                "name" : "[parameters('clusterSku')]"
+                "name": "[parameters('clusterSku')]"
             },
             "location": "[resourceGroup().location]",
             "properties": {
@@ -113,7 +112,7 @@
         },
         {
             "type": "Microsoft.ServiceFabric/managedclusters/nodetypes",
-            "apiVersion": "[variables('sfApiVersion')]",
+            "apiVersion": "2022-10-01-preview",
             "name": "[concat(parameters('clusterName'), '/', parameters('nodeTypeName'))]",
             "dependsOn": [
                 "[concat('Microsoft.ServiceFabric/managedclusters/', parameters('clusterName'))]"
@@ -128,7 +127,7 @@
                 "vmSize": "[parameters('vmSize')]",
                 "vmInstanceCount": "[parameters('vmInstanceCount')]",
                 "dataDiskSizeGB": "[parameters('dataDiskSizeGB')]",
-                "dataDiskType": "[parameters('managedDataDiskType')]",
+                "dataDiskType": "[parameters('managedDataDiskType')]",
                 "vmExtensions": [
                     {
                         "name": "AzureDiskEncryption",
@@ -150,13 +149,13 @@
         }
     ],
     "outputs": {
-         "serviceFabricExplorer": {
+        "serviceFabricExplorer": {
             "value": "[concat('https://', reference(parameters('clusterName')).fqdn, ':', reference(parameters('clusterName')).httpGatewayConnectionPort)]",
             "type": "string"
         },
         "clientConnectionEndpoint": {
-             "value": "[concat(reference(parameters('clusterName')).fqdn, ':', reference(parameters('clusterName')).clientConnectionPort)]",
-             "type": "string"
+            "value": "[concat(reference(parameters('clusterName')).fqdn, ':', reference(parameters('clusterName')).clientConnectionPort)]",
+            "type": "string"
         },
         "clusterProperties": {
             "value": "[reference(parameters('clusterName'))]",

@@ -98,11 +98,10 @@
         }
     },
     "variables": {
-        "sfApiVersion": "2021-05-01"
     },
     "resources": [
         {
-            "apiVersion": "[variables('sfApiVersion')]",
+            "apiVersion": "2022-10-01-preview",
             "type": "Microsoft.ServiceFabric/managedclusters",
             "name": "[parameters('clusterName')]",
             "location": "[resourcegroup().location]",
@@ -133,7 +132,7 @@
             }
         },
         {
-            "apiVersion": "[variables('sfApiVersion')]",
+            "apiVersion": "2022-10-01-preview",
             "type": "Microsoft.ServiceFabric/managedclusters/nodetypes",
             "name": "[concat(parameters('clusterName'), '/', parameters('nodeType1Name'))]",
             "location": "[resourcegroup().location]",
@@ -149,12 +148,12 @@
                 "vmSize": "[parameters('nodeType1VmSize')]",
                 "vmInstanceCount": "[parameters('nodeType1VmInstanceCount')]",
                 "dataDiskSizeGB": "[parameters('nodeType1DataDiskSizeGB')]",
-                "dataDiskType": "[parameters('nodeType1managedDataDiskType')]"
+                "dataDiskType": "[parameters('nodeType1managedDataDiskType')]"
 
             }
         },
         {
-            "apiVersion": "[variables('sfApiVersion')]",
+            "apiVersion": "2022-10-01-preview",
             "type": "Microsoft.ServiceFabric/managedclusters/nodetypes",
             "name": "[concat(parameters('clusterName'), '/', parameters('nodeType2Name'))]",
             "location": "[resourcegroup().location]",
