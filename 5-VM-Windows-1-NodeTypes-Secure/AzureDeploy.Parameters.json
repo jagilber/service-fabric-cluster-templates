@@ -1,66 +1,66 @@
 {
-  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-    "clusterLocation": {
-      "value": "westus"
+    "aadClientApplication": {
+      "value": null
     },
-    "clusterName": {
-      "value": "GEN-UNIQUE"
+    "aadClusterApplication": {
+      "value": null
     },
-    "adminUserName": {
-      "value": "GEN-UNIQUE"
+    "aadTenantId": {
+      "value": null
+    },
+    "addressPrefix": {
+      "value": "10.0.0.0/16"
     },
     "adminPassword": {
       "value": "GEN-PASSWORD"
     },
-    "vmImagePublisher": {
-      "value": "MicrosoftWindowsServer"
+    "adminUserName": {
+      "value": "GEN-UNIQUE"
     },
-    "vmImageOffer": {
-      "value": "WindowsServer"
+    "certificateCommonName": {
+      "value": null
     },
-    "vmImageSku": {
-      "value": "2019-Datacenter"
-    },
-    "vmImageVersion": {
-      "value": "latest"
-    },
-    "loadBalancedAppPort1": {
-      "value": 80
-    },
-    "loadBalancedAppPort2": {
-      "value": 443
-    },
-    "clusterProtectionLevel": {
-      "value": "EncryptAndSign"
-    },
-    "certificateStoreValue": {
-      "value": "My"
+    "certificateIssuerThumbprint": {
+      "value": null
     },
     "certificateThumbprint": {
-      "value": "GEN-SF-CERT-THUMBPRINT"
-    },
-    "sourceVaultValue": {
-      "value": "GEN-KEYVAULT-RESOURCE-ID"
+      "value": "GEN-CUSTOM-DOMAIN-SSLCERT-THUMBPRINT"
     },
     "certificateUrlValue": {
-      "value": "GEN-SF-CERT-URL"
+      "value": "GEN-KEYVAULT-SSL-SECRET-URI"
     },
-    "storageAccountType": {
-      "value": "Standard_LRS"
+    "clusterName": {
+      "value": "GEN-UNIQUE"
     },
-    "supportLogStorageAccountType": {
-      "value": "Standard_LRS"
-    },
-    "applicationDiagnosticsStorageAccountType": {
-      "value": "Standard_LRS"
+    "dnsName": {
+      "value": "GEN-UNIQUE"
     },
     "nt0InstanceCount": {
       "value": 5
     },
+    "sourceVaultValue": {
+      "value": "GEN-KEYVAULT-RESOURCE-ID"
+    },
+    "subnet0Name": {
+      "value": "Subnet-0"
+    },
+    "subnet0Prefix": {
+      "value": "10.0.0.0/24"
+    },
+    "virtualNetworkName": {
+      "value": "VNet"
+    },
+    "vmImageSku": {
+      "value": "2022-Datacenter"
+    },
+    "vmNodeType0Name": {
+      "value": "nt0"
+    },
     "vmNodeType0Size": {
-      "value": "Standard_D2_V2"
+      "value": "Standard_D2_v2"
     }
   }
 }
