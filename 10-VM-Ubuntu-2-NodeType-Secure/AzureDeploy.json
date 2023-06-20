@@ -805,7 +805,7 @@
                                     "settings": {
                                         "clusterEndpoint": "[reference(parameters('clusterName')).clusterEndpoint]",
                                         "nodeTypeRef": "[parameters('vmNodeType0Name')]",
-                                        "durabilityLevel": "Bronze",
+                                        "durabilityLevel": "Silver",
                                         "enableParallelJobs": true,
                                         "nicPrefixOverride": "[parameters('subnet0Prefix')]",
                                         "certificate": {
@@ -1287,7 +1287,7 @@
                                     "settings": {
                                         "clusterEndpoint": "[reference(parameters('clusterName')).clusterEndpoint]",
                                         "nodeTypeRef": "[parameters('vmNodeType1Name')]",
-                                        "durabilityLevel": "Bronze",
+                                        "durabilityLevel": "Silver",
                                         "enableParallelJobs": true,
                                         "nicPrefixOverride": "[parameters('subnet1Prefix')]",
                                         "certificate": {
@@ -1447,7 +1447,7 @@
                             "startPort": "[parameters('nt0applicationStartPort')]"
                         },
                         "clientConnectionEndpointPort": "[parameters('nt0fabricTcpGatewayPort')]",
-                        "durabilityLevel": "Bronze",
+                        "durabilityLevel": "Silver",
                         "ephemeralPorts": {
                             "endPort": "[parameters('nt0ephemeralEndPort')]",
                             "startPort": "[parameters('nt0ephemeralStartPort')]"
@@ -1463,7 +1463,7 @@
                             "startPort": "[parameters('nt1applicationStartPort')]"
                         },
                         "clientConnectionEndpointPort": "[parameters('nt1fabricTcpGatewayPort')]",
-                        "durabilityLevel": "Bronze",
+                        "durabilityLevel": "Silver",
                         "ephemeralPorts": {
                             "endPort": "[parameters('nt1ephemeralEndPort')]",
                             "startPort": "[parameters('nt1ephemeralStartPort')]"

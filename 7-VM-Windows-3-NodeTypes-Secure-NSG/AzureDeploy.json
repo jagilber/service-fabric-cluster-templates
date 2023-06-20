@@ -1758,7 +1758,7 @@
                                         "clusterEndpoint": "[reference(parameters('clusterName')).clusterEndpoint]",
                                         "nodeTypeRef": "[variables('vmNodeType2Name')]",
                                         "dataPath": "D:\\SvcFab",
-                                        "durabilityLevel": "Bronze",
+                                        "durabilityLevel": "Silver",
                                         "enableParallelJobs": true,
                                         "nicPrefixOverride": "[variables('subnet2Prefix')]",
                                         "certificate": {
@@ -1995,7 +1995,7 @@
                             "startPort": "[variables('nt2applicationStartPort')]"
                         },
                         "clientConnectionEndpointPort": "[variables('nt2fabricTcpGatewayPort')]",
-                        "durabilityLevel": "Bronze",
+                        "durabilityLevel": "Silver",
                         "ephemeralPorts": {
                             "endPort": "[variables('nt2ephemeralEndPort')]",
                             "startPort": "[variables('nt2ephemeralStartPort')]"

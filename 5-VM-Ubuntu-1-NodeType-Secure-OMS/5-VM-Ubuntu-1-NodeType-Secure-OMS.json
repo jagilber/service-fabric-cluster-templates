@@ -514,7 +514,7 @@
                                     "settings": {
                                         "clusterEndpoint": "[reference(parameters('clusterName')).clusterEndpoint]",
                                         "nodeTypeRef": "[variables('vmNodeType0Name')]",
-                                        "durabilityLevel": "Bronze",
+                                        "durabilityLevel": "Silver",
                                         "certificate": {
                                             "thumbprint": "[parameters('certificateThumbprint')]",
                                             "x509StoreName": "[parameters('certificateStoreValue')]"
@@ -748,7 +748,7 @@
                             "startPort": "[variables('nt0applicationStartPort')]"
                         },
                         "clientConnectionEndpointPort": "[variables('nt0fabricTcpGatewayPort')]",
-                        "durabilityLevel": "Bronze",
+                        "durabilityLevel": "Silver",
                         "ephemeralPorts": {
                             "endPort": "[variables('nt0ephemeralEndPort')]",
                             "startPort": "[variables('nt0ephemeralStartPort')]"
