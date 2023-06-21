@@ -1,0 +1,57 @@
+# 5 Node 1 node type secure Windows Service Fabric Cluster with standard load balancer, AAD, and common name certificate
+
+<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure-Samples%2Fservice-fabric-cluster-templates%2Fmaster%2F5-VM-Windows-1-NodeTypes-SLB-AAD-Common%2FAzureDeploy.json" target="_blank">
+    <img src="http://azuredeploy.net/deploybutton.png"/>
+</a>
+<a href="http://armviz.io/#/?load=https%3A%2F%2Fraw.githubusercontent.com%2FAzure-Samples%2Fservice-fabric-cluster-templates%2Fmaster%2F5-VM-Windows-1-NodeTypes-SLB-AAD-Common%2FAzureDeploy.json" target="_blank">
+    <img src="http://armviz.io/visualizebutton.png"/>
+</a>
+
+This template allows you to deploy a secure 5 node, 1 Node Type Service Fabric Cluster with Standard load balancer running Windows Server 2022 Datacenter on a Standard_D2_v2 Size Virtual Machine Scale set. Additionally, this template is configured to use certificate common name (subject name) instead of thumbprint which is a Service Fabric best practice. This template is also configured for Azure Active Directory authentication. [Set up Azure Active Directory for client authentication in the Azure portal](https://learn.microsoft.com/azure/service-fabric/service-fabric-cluster-creation-setup-azure-ad-via-portal) provides the steps necessary for creation of the client and cluster App registration accounts. After accounts have been created, this template can be used to deploy the cluster with AAD configuration enabled.
+
+```json
+"azureActiveDirectory": {
+    "clientApplication": "[parameters('aadClientApplication')]",
+    "clusterApplication": "[parameters('aadClusterApplication')]",
+    "tenantId": "[parameters('aadTenantId')]"
+},
+```
+
+Service Fabric Best Practice information: [Azure Service Fabric Security](https://learn.microsoft.com/en-us/azure/service-fabric/service-fabric-best-practices-security)
+
+Detailed information about cluster certificates: [Manage certificates in Service Fabric clusters](https://learn.microsoft.com/azure/service-fabric/cluster-security-certificate-management) and [Deploy a Service Fabric cluster that uses certificate common name instead of thumbprint](https://learn.microsoft.com/azure/service-fabric/service-fabric-create-cluster-using-cert-cn)
+
+## Certificate needed for the template if using the 'Deploy to Azure' button above
+
+This template assumes that you already have certificates uploaded to your key vault. Production clusters should always use a CA signed certificate. If needing a certificate for testing, a .pfx certificate can be generated directly in the key vault or if you want to create a new certificate run the [New-ServiceFabricClusterCertificate.ps1](../scripts/New-ServiceFabricClusterCertificate.ps1) file in this repository. That script will output the values necessary for deployment via the parameters file.
+
+**NOTE: Azure Key vault 'Access Configuration' should have 'Azure Virtual Machines for deployment' and 'Azure Resource Manager for template deployment' enabled for node key vault access during template deployment.**
+
+You can download the .PFX from the key vault from the portal
+
+- Go to the key vault resource
+- navigate to the secrets tab and download the .pfx
+
+![DownloadCert]
+
+## Use Powershell to deploy your cluster
+
+Go through the process of creating the cluster as described in [Creating Service Fabric Cluster via arm](https://docs.microsoft.com/azure/service-fabric/service-fabric-cluster-creation-via-arm)
+
+## Creating a custom ARM template
+
+If you are wanting to create a custom ARM template for your cluster, then you have two choices.
+
+1. You can acquire this sample template and make changes to it.
+2. Log into the azure portal and use the service fabric portal pages to generate the template for you to customize.
+
+    - Log on to the Azure Portal [http://aka.ms/servicefabricportal](http://aka.ms/servicefabricportal).
+    - Go through the process of creating the cluster as described in [Creating Service Fabric Cluster via portal](https://docs.microsoft.com/azure/service-fabric/service-fabric-cluster-creation-via-portal) , but do not click on ***create**, instead go to Summary and download the template and parameters.
+
+ ![DownloadTemplate][DownloadTemplate]
+
+Unzip the downloaded .zip on your local machine, make any changes to template or the parameter file as you need.
+
+<!--Image references-->
+[DownloadTemplate]: ../media/DownloadTemplate.png
+[DownloadCert]: ../media/DownloadCert.PNG
