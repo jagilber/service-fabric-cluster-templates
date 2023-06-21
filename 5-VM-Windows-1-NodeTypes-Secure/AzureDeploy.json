@@ -4,7 +4,10 @@
     "parameters": {
         "addressPrefix": {
             "type": "string",
-            "defaultValue": "10.0.0.0/16"
+            "defaultValue": "10.0.0.0/16",
+            "metadata": {
+                "description": "Address prefix for the virtual network"
+            }
         },
         "adminPassword": {
             "type": "securestring",
@@ -59,7 +62,11 @@
             }
         },
         "dnsName": {
-            "type": "string"
+            "type": "string",
+            "defaultValue": "[parameters('clusterName')]",
+            "metadata": {
+                "description": "DNS Name for the Public IP. Must be unique in the region"
+            }
         },
         "durabilityLevel": {
             "type": "string",
@@ -73,37 +80,61 @@
                 "description": "Production workloads require a durability level of Silver or Gold to help avoid data loss from VM-level infrastructure requests. https://learn.microsoft.com/en-us/azure/service-fabric/service-fabric-cluster-capacity"
             }
         },
+        "fabricApplicationEndPort": {
+            "type": "int",
+            "defaultValue": 30000,
+            "metadata": {
+                "description": "Application port range end"
+            }
+        },
+        "fabricApplicationStartPort": {
+            "type": "int",
+            "defaultValue": 20000,
+            "metadata": {
+                "description": "Application port range start"
+            }
+        },
+        "fabricEphemeralEndPort": {
+            "type": "int",
+            "defaultValue": 65534,
+            "metadata": {
+                "description": "Ephemeral port range end"
+            }
+        },
+        "fabricEphemeralStartPort": {
+            "type": "int",
+            "defaultValue": 49152,
+            "metadata": {
+                "description": "Ephemeral port range start"
+            }
+        },
+        "fabricHttpGatewayPort": {
+            "type": "int",
+            "defaultValue": 19080,
+            "metadata": {
+                "description": "HTTP gateway port"
+            }
+        },
+        "fabricTcpGatewayPort": {
+            "type": "int",
+            "defaultValue": 19000,
+            "metadata": {
+                "description": "TCP gateway port"
+            }
+        },
         "lbIPName": {
             "type": "string",
-            "defaultValue": "PublicIP-LB-FE"
+            "defaultValue": "PublicIP-LB-FE",
+            "metadata": {
+                "description": "Name of the public IP address used by the load balancer"
+            }
         },
         "nicName": {
             "type": "string",
-            "defaultValue": "NIC"
-        },
-        "nt0applicationEndPort": {
-            "type": "int",
-            "defaultValue": 30000
-        },
-        "nt0applicationStartPort": {
-            "type": "int",
-            "defaultValue": 20000
-        },
-        "nt0ephemeralEndPort": {
-            "type": "int",
-            "defaultValue": 65534
-        },
-        "nt0ephemeralStartPort": {
-            "type": "int",
-            "defaultValue": 49152
-        },
-        "nt0fabricHttpGatewayPort": {
-            "type": "int",
-            "defaultValue": 19080
-        },
-        "nt0fabricTcpGatewayPort": {
-            "type": "int",
-            "defaultValue": 19000
+            "defaultValue": "NIC",
+            "metadata": {
+                "description": "Name of the network interface"
+            }
         },
         "nt0InstanceCount": {
             "type": "int",
@@ -145,11 +176,17 @@
         },
         "subnet0Name": {
             "type": "string",
-            "defaultValue": "Subnet-0"
+            "defaultValue": "Subnet-0",
+            "metadata": {
+                "description": "Name of the subnet for the cluster nodes"
+            }
         },
         "subnet0Prefix": {
             "type": "string",
-            "defaultValue": "10.0.0.0/24"
+            "defaultValue": "10.0.0.0/24",
+            "metadata": {
+                "description": "Subnet prefix for the cluster nodes"
+            }
         },
         "supportLogStorageAccountName": {
             "type": "string",
@@ -171,7 +208,10 @@
         },
         "virtualNetworkName": {
             "type": "string",
-            "defaultValue": "VNet"
+            "defaultValue": "VNet",
+            "metadata": {
+                "description": "Name of the virtual network"
+            }
         },
         "vmImageOffer": {
             "type": "string",
@@ -203,12 +243,18 @@
         },
         "vmNodeType0Name": {
             "type": "string",
-            "defaultValue": "nt0",
-            "maxLength": 9
+            "defaultValue": "nodetype0",
+            "maxLength": 9,
+            "metadata": {
+                "description": "Name of the node type"
+            }
         },
         "vmNodeType0Size": {
             "type": "string",
-            "defaultValue": "Standard_D2_v2"
+            "defaultValue": "Standard_D2_v2",
+            "metadata": {
+                "description": "Size of VMs in the node type"
+            }
         }
     },
     "variables": {
@@ -339,12 +385,12 @@
                             "backendAddressPool": {
                                 "id": "[variables('lbPoolID0')]"
                             },
-                            "backendPort": "[parameters('nt0fabricTcpGatewayPort')]",
+                            "backendPort": "[parameters('fabricTcpGatewayPort')]",
                             "enableFloatingIP": "false",
                             "frontendIPConfiguration": {
                                 "id": "[variables('lbIPConfig0')]"
                             },
-                            "frontendPort": "[parameters('nt0fabricTcpGatewayPort')]",
+                            "frontendPort": "[parameters('fabricTcpGatewayPort')]",
                             "idleTimeoutInMinutes": "5",
                             "probe": {
                                 "id": "[variables('lbProbeID0')]"
@@ -358,12 +404,12 @@
                             "backendAddressPool": {
                                 "id": "[variables('lbPoolID0')]"
                             },
-                            "backendPort": "[parameters('nt0fabricHttpGatewayPort')]",
+                            "backendPort": "[parameters('fabricHttpGatewayPort')]",
                             "enableFloatingIP": "false",
                             "frontendIPConfiguration": {
                                 "id": "[variables('lbIPConfig0')]"
                             },
-                            "frontendPort": "[parameters('nt0fabricHttpGatewayPort')]",
+                            "frontendPort": "[parameters('fabricHttpGatewayPort')]",
                             "idleTimeoutInMinutes": "5",
                             "probe": {
                                 "id": "[variables('lbHttpProbeID0')]"
@@ -378,7 +424,7 @@
                         "properties": {
                             "intervalInSeconds": 5,
                             "numberOfProbes": 2,
-                            "port": "[parameters('nt0fabricTcpGatewayPort')]",
+                            "port": "[parameters('fabricTcpGatewayPort')]",
                             "protocol": "tcp"
                         }
                     },
@@ -387,7 +433,7 @@
                         "properties": {
                             "intervalInSeconds": 5,
                             "numberOfProbes": 2,
-                            "port": "[parameters('nt0fabricHttpGatewayPort')]",
+                            "port": "[parameters('fabricHttpGatewayPort')]",
                             "protocol": "tcp"
                         }
                     }
@@ -621,21 +667,21 @@
                         "name": "Security"
                     }
                 ],
-                "managementEndpoint": "[concat('https://',reference(concat(parameters('lbIPName'),'-',parameters('vmNodeType0Name'))).dnsSettings.fqdn,':',parameters('nt0fabricHttpGatewayPort'))]",
+                "managementEndpoint": "[concat('https://',reference(concat(parameters('lbIPName'),'-',parameters('vmNodeType0Name'))).dnsSettings.fqdn,':',parameters('fabricHttpGatewayPort'))]",
                 "nodeTypes": [
                     {
                         "name": "[parameters('vmNodeType0Name')]",
                         "applicationPorts": {
-                            "endPort": "[parameters('nt0applicationEndPort')]",
-                            "startPort": "[parameters('nt0applicationStartPort')]"
+                            "endPort": "[parameters('fabricApplicationEndPort')]",
+                            "startPort": "[parameters('fabricApplicationStartPort')]"
                         },
-                        "clientConnectionEndpointPort": "[parameters('nt0fabricTcpGatewayPort')]",
+                        "clientConnectionEndpointPort": "[parameters('fabricTcpGatewayPort')]",
                         "durabilityLevel": "[parameters('durabilityLevel')]",
                         "ephemeralPorts": {
-                            "endPort": "[parameters('nt0ephemeralEndPort')]",
-                            "startPort": "[parameters('nt0ephemeralStartPort')]"
+                            "endPort": "[parameters('fabricEphemeralEndPort')]",
+                            "startPort": "[parameters('fabricEphemeralStartPort')]"
                         },
-                        "httpGatewayEndpointPort": "[parameters('nt0fabricHttpGatewayPort')]",
+                        "httpGatewayEndpointPort": "[parameters('fabricHttpGatewayPort')]",
                         "isPrimary": true,
                         "vmInstanceCount": "[parameters('nt0InstanceCount')]"
                     }
