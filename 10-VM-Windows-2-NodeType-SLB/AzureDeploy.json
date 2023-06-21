@@ -1274,7 +1274,6 @@
                         "vmInstanceCount": "[parameters('nt1InstanceCount')]"
                     }
                 ],
-                "provisioningState": "Default",
                 "reliabilityLevel": "[parameters('reliabilityLevel')]",
                 "upgradeMode": "Automatic",
                 "vmImage": "Windows"
