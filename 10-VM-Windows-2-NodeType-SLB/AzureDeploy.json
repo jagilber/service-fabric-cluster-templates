@@ -198,6 +198,17 @@
                 "description": "Resource Id of the key vault, is should be in the format of /subscriptions/<Sub ID>/resourceGroups/<Resource group name>/providers/Microsoft.KeyVault/vaults/<vault name>"
             }
         },
+        "storageAccountType": {
+            "type": "string",
+            "allowedValues": [
+                "Standard_LRS",
+                "Standard_GRS"
+            ],
+            "defaultValue": "Standard_LRS",
+            "metadata": {
+                "description": "Managed disk storage account type"
+            }
+        },
         "subnet0Name": {
             "type": "string",
             "defaultValue": "Subnet-0"

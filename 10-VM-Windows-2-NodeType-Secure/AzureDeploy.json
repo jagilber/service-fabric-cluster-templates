@@ -2,27 +2,6 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "aadClientApplication": {
-            "type": "string",
-            "defaultValue": "",
-            "metadata": {
-                "description": ""
-            }
-        },
-        "aadClusterApplication": {
-            "type": "string",
-            "defaultValue": "",
-            "metadata": {
-                "description": "AAD Cluster Application Id"
-            }
-        },
-        "aadTenantId": {
-            "type": "string",
-            "defaultValue": "",
-            "metadata": {
-                "description": "AAD Tenant Id"
-            }
-        },
         "addressPrefix": {
             "type": "string",
             "defaultValue": "10.0.0.0/16"
@@ -56,20 +35,6 @@
             "defaultValue": "Standard_LRS",
             "metadata": {
                 "description": "Replication option for the VM image storage account"
-            }
-        },
-        "certificateCommonName": {
-            "type": "string",
-            "defaultValue": "",
-            "metadata": {
-                "description": "Certificate Common Name"
-            }
-        },
-        "certificateIssuerThumbprint": {
-            "type": "string",
-            "defaultValue": "",
-            "metadata": {
-                "description": "Certificate Issuer Thumbprint"
             }
         },
         "certificateThumbprint": {
@@ -196,6 +161,17 @@
             "defaultValue": "GEN-KEYVAULT-RESOURCE-ID",
             "metadata": {
                 "description": "Resource Id of the key vault, is should be in the format of /subscriptions/<Sub ID>/resourceGroups/<Resource group name>/providers/Microsoft.KeyVault/vaults/<vault name>"
+            }
+        },
+        "storageAccountType": {
+            "type": "string",
+            "allowedValues": [
+                "Standard_LRS",
+                "Standard_GRS"
+            ],
+            "defaultValue": "Standard_LRS",
+            "metadata": {
+                "description": "Managed disk storage account type"
             }
         },
         "subnet0Name": {
@@ -833,9 +809,6 @@
                                         "nicPrefixOverride": "[parameters('subnet1Prefix')]",
                                         "certificate": {
                                             "thumbprint": "[parameters('certificateThumbprint')]",
-                                            // "commonNames": [
-                                            //   "[parameters('certificateCommonName')]"
-                                            // ],
                                             "x509StoreName": "My"
                                         }
                                     },
@@ -983,22 +956,10 @@
                 "addonFeatures": [
                     "DnsService"
                 ],
-                // "azureActiveDirectory": {
-                //   "clientApplication": "[parameters('aadClientApplication')]",
-                //   "clusterApplication": "[parameters('aadClusterApplication')]",
-                //   "tenantId": "[parameters('aadTenantId')]"
-                // },
                 "certificate": {
                     "thumbprint": "[parameters('certificateThumbprint')]",
                     "x509StoreName": "My"
                 },
-                // "clientCertificateCommonNames": [
-                //   {
-                //     "certificateCommonName": "[parameters('certificateCommonName')]",
-                //     "certificateIssuerThumbprint": "[parameters('certificateIssuerThumbprint')]",
-                //     "isAdmin": true
-                //   }
-                // ],
                 "clientCertificateThumbprints": [],
                 "clusterState": "Default",
                 "diagnosticsStorageAccountConfig": {

@@ -160,6 +160,17 @@
                 "description": "Production workloads require a reliability level of Silver or greater (more than 5 nodes). https://learn.microsoft.com/en-us/azure/service-fabric/service-fabric-cluster-capacity"
             }
         },
+        "storageAccountType": {
+            "type": "string",
+            "allowedValues": [
+                "Standard_LRS",
+                "Standard_GRS"
+            ],
+            "defaultValue": "Standard_LRS",
+            "metadata": {
+                "description": "Managed disk storage account type"
+            }
+        },
         "sourceVaultValue": {
             "type": "string",
             "defaultValue": "GEN-KEYVAULT-RESOURCE-ID",
@@ -468,7 +479,7 @@
                                     "settings": {
                                         "clusterEndpoint": "[reference(parameters('clusterName')).clusterEndpoint]",
                                         "nodeTypeRef": "[parameters('vmNodeType0Name')]",
-                                        "dataPath": "D:\\\\SvcFab",
+                                        "dataPath": "D:\\SvcFab",
                                         "durabilityLevel": "[parameters('durabilityLevel')]",
                                         "enableParallelJobs": true,
                                         "nicPrefixOverride": "[parameters('subnet0Prefix')]",
