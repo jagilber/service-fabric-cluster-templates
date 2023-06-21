@@ -57,7 +57,7 @@
             "value": "2022-Datacenter"
         },
         "vmNodeType0Name": {
-            "value": "nt0"
+            "value": "nodetype0"
         },
         "vmNodeType0Size": {
             "value": "Standard_D2_v2"
