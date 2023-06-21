@@ -2,15 +2,6 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "aadClientApplication": {
-            "value": null
-        },
-        "aadClusterApplication": {
-            "value": null
-        },
-        "aadTenantId": {
-            "value": null
-        },
         "addressPrefix": {
             "value": "10.0.0.0/16"
         },
@@ -25,9 +16,6 @@
         },
         "certificateIssuerThumbprint": {
             "value": null
-        },
-        "certificateThumbprint": {
-            "value": "GEN-CUSTOM-DOMAIN-SSLCERT-THUMBPRINT"
         },
         "certificateUrlValue": {
             "value": "GEN-KEYVAULT-SSL-SECRET-URI"

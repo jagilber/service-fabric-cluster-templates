@@ -1212,13 +1212,14 @@
                     "thumbprint": "[parameters('certificateThumbprint')]",
                     "x509StoreName": "My"
                 },
-                // "clientCertificateCommonNames": [
-                //   {
-                //     "certificateCommonName": "[parameters('certificateCommonName')]]",
-                //     "certificateIssuerThumbprint": "[parameters('certificateIssuerThumbprint')]",
-                //     "isAdmin": true
-                //   }
-                // ],
+                // "certificateCommonNames": {
+                //     "commonNames": [
+                //         {
+                //             "certificateCommonName": "[parameters('certificateCommonName')]",
+                //             "certificateIssuerThumbprint": "[parameters('certificateIssuerThumbprint')]"
+                //         }
+                //     ]
+                // },
                 "clientCertificateThumbprints": [],
                 "clusterState": "Default",
                 "diagnosticsStorageAccountConfig": {

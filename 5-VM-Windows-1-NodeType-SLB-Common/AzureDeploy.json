@@ -2,27 +2,6 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "aadClientApplication": {
-            "type": "string",
-            "defaultValue": "GEN-AAD-CLIENT-APP-ID",
-            "metadata": {
-                "description": "AAD Client Application Id"
-            }
-        },
-        "aadClusterApplication": {
-            "type": "string",
-            "defaultValue": "",
-            "metadata": {
-                "description": "AAD Cluster Application Id"
-            }
-        },
-        "aadTenantId": {
-            "type": "string",
-            "defaultValue": "",
-            "metadata": {
-                "description": "AAD Tenant Id"
-            }
-        },
         "addressPrefix": {
             "type": "string",
             "defaultValue": "10.0.0.0/16",
@@ -65,7 +44,7 @@
             "type": "string",
             "defaultValue": "",
             "metadata": {
-                "description": "Certificate Common Name"
+                "description": "Certificate Common Name (CN/subject name))"
             }
         },
         "certificateIssuerThumbprint": {
@@ -73,13 +52,6 @@
             "defaultValue": "",
             "metadata": {
                 "description": "Certificate Issuer Thumbprint"
-            }
-        },
-        "certificateThumbprint": {
-            "type": "string",
-            "defaultValue": "GEN-CUSTOM-DOMAIN-SSLCERT-THUMBPRINT",
-            "metadata": {
-                "description": "Certificate Thumbprint"
             }
         },
         "certificateUrlValue": {
@@ -679,10 +651,9 @@
                                         "enableParallelJobs": true,
                                         "nicPrefixOverride": "[parameters('subnet0Prefix')]",
                                         "certificate": {
-                                            "thumbprint": "[parameters('certificateThumbprint')]",
-                                            // "commonNames": [
-                                            //   "[parameters('certificateCommonName')]"
-                                            // ],
+                                            "commonNames": [
+                                                "[parameters('certificateCommonName')]"
+                                            ],
                                             "x509StoreName": "My"
                                         }
                                     },
@@ -830,22 +801,14 @@
                 "addonFeatures": [
                     "DnsService"
                 ],
-                // "azureActiveDirectory": {
-                //   "clientApplication": "[parameters('aadClientApplication')]",
-                //   "clusterApplication": "[parameters('aadClusterApplication')]",
-                //   "tenantId": "[parameters('aadTenantId')]"
-                // },
-                "certificate": {
-                    "thumbprint": "[parameters('certificateThumbprint')]",
-                    "x509StoreName": "My"
+                "certificateCommonNames": {
+                    "commonNames": [
+                        {
+                            "certificateCommonName": "[parameters('certificateCommonName')]",
+                            "certificateIssuerThumbprint": "[parameters('certificateIssuerThumbprint')]"
+                        }
+                    ]
                 },
-                // "clientCertificateCommonNames": [
-                //   {
-                //     "certificateCommonName": "[parameters('certificateCommonName')]]",
-                //     "certificateIssuerThumbprint": "[parameters('certificateIssuerThumbprint')]",
-                //     "isAdmin": true
-                //   }
-                // ],
                 "clientCertificateThumbprints": [],
                 "clusterState": "Default",
                 "diagnosticsStorageAccountConfig": {

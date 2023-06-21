@@ -1,4 +1,4 @@
-# 5 Node secure Windows Service Fabric Cluster with standard load balancer and NSG
+# 5 Node 1 node type Windows Service Fabric Cluster with standard load balancer, NSG, and common name certificate
 
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure-Samples%2Fservice-fabric-cluster-templates%2Fmaster%2F5-VM-Windows-1-NodeTypes-SLB%2FAzureDeploy.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
@@ -7,11 +7,15 @@
     <img src="http://armviz.io/visualizebutton.png"/>
 </a>
 
-This template allows you to deploy a secure 5 node, 1 Node Type Service Fabric Cluster with Standard load balancer running Windows Server 2022 Datacenter on a Standard_D2_v2 Size Virtual Machine Scale set.
+This template allows you to deploy a secure 5 node, 1 Node Type Service Fabric Cluster with Standard load balancer running Windows Server 2022 Datacenter on a Standard_D2_v2 Size Virtual Machine Scale set. Additionally, this template is configured to use certificate common name (subject name) instead of thumbprint which is a Service Fabric best practice.
+
+Service Fabric Best Practice information: [Azure Service Fabric Security](https://learn.microsoft.com/en-us/azure/service-fabric/service-fabric-best-practices-security)
+
+Detailed information about cluster certificates: [Manage certificates in Service Fabric clusters](https://learn.microsoft.com/azure/service-fabric/cluster-security-certificate-management) and [Deploy a Service Fabric cluster that uses certificate common name instead of thumbprint](https://learn.microsoft.com/azure/service-fabric/service-fabric-create-cluster-using-cert-cn)
 
 ## Certificate needed for the template if using the 'Deploy to Azure' button above
 
-This template assumes that you already have certificates uploaded to your key vault. Production clusters should always use a CA signed certificate. If needing a certificate for testing, a .pfx certificate can be generated directly in the key vault or if you want to create a new certificate run the [New-ServiceFabricClusterCertificate.ps1](../scripts/New-ServiceFabricClusterCertificate.ps1) file in this repository. That script will output the values necessary for deployment via the parameters file.
+This template assumes that you already have certificates uploaded to your key vault. Production clusters should always use a CA signed certificate.
 
 **NOTE: Azure Key vault 'Access Configuration' should have 'Azure Virtual Machines for deployment' and 'Azure Resource Manager for template deployment' enabled for node key vault access during template deployment.**
 
