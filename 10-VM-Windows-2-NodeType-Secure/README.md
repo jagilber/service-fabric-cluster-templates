@@ -7,7 +7,7 @@
     <img src="http://armviz.io/visualizebutton.png"/>
 </a>
 
-This template allows you to deploy a secure 10 node, 2 Node Type Service Fabric Cluster with Standard load balancers running Windows Server 2022 Datacenter on a Standard_D2_v2 Size Virtual Machine Scale set.
+This template allows you to deploy a secure 10 node, 2 Node Type Service Fabric Cluster running Windows Server 2022 Datacenter on a Standard_D2_v2 Size Virtual Machine Scale set.
 
 ## Certificate needed for the template if using the 'Deploy to Azure' button above
 

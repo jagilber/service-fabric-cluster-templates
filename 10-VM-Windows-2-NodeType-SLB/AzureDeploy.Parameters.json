@@ -1,0 +1,81 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "aadClientApplication": {
+      "value": null
+    },
+    "aadClusterApplication": {
+      "value": null
+    },
+    "aadTenantId": {
+      "value": null
+    },
+    "addressPrefix": {
+      "value": "10.0.0.0/16"
+    },
+    "adminPassword": {
+      "value": "GEN-PASSWORD"
+    },
+    "adminUserName": {
+      "value": "GEN-UNIQUE"
+    },
+    "certificateCommonName": {
+      "value": null
+    },
+    "certificateIssuerThumbprint": {
+      "value": null
+    },
+    "certificateThumbprint": {
+      "value": "GEN-CUSTOM-DOMAIN-SSLCERT-THUMBPRINT"
+    },
+    "certificateUrlValue": {
+      "value": "GEN-KEYVAULT-SSL-SECRET-URI"
+    },
+    "clusterName": {
+      "value": "GEN-UNIQUE"
+    },
+    "dnsName": {
+      "value": "GEN-UNIQUE"
+    },
+    "nt0InstanceCount": {
+      "value": 5
+    },
+    "nt1InstanceCount": {
+      "value": 5
+    },
+    "sourceVaultValue": {
+      "value": "GEN-KEYVAULT-RESOURCE-ID"
+    },
+    "subnet0Name": {
+      "value": "Subnet-0"
+    },
+    "subnet0Prefix": {
+      "value": "10.0.0.0/24"
+    },
+    "subnet1Name": {
+      "value": "Subnet-1"
+    },
+    "subnet1Prefix": {
+      "value": "10.0.1.0/24"
+    },
+    "virtualNetworkName": {
+      "value": "VNet"
+    },
+    "vmImageSku": {
+      "value": "2022-Datacenter"
+    },
+    "vmNodeType0Name": {
+      "value": "nt0"
+    },
+    "vmNodeType0Size": {
+      "value": "Standard_D2_v2"
+    },
+    "vmNodeType1Name": {
+      "value": "nt1"
+    },
+    "vmNodeType1Size": {
+      "value": "Standard_D2_v2"
+    }
+  }
+}
