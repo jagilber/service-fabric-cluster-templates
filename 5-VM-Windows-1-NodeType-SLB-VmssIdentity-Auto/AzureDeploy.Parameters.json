@@ -38,9 +38,6 @@
         "subnet0Prefix": {
             "value": "10.0.0.0/24"
         },
-        "userAssignedIdentity": {
-            "value": "GEN-UNIQUE"
-        },
         "virtualNetworkName": {
             "value": "VNet"
         },
@@ -52,6 +49,12 @@
         },
         "vmNodeType0Size": {
             "value": "Standard_DS4_v2"
+        },
+        "vmssAssignedIdentityName": {
+            "value": "nodetype0-identity"
+        },
+        "vmssIdentityRoleNameGuid": {
+            "value": "GEN-UNIQUE-ONCE"
         }
     }
 }

@@ -220,13 +220,6 @@
                 "description": "Replication option for the support log storage account"
             }
         },
-        "userAssignedIdentity": {
-            "type": "string",
-            "defaultValue": "",
-            "metadata": {
-                "description": "User assigned identity for the cluster / vmss"
-            }
-        },
         "virtualNetworkName": {
             "type": "string",
             "defaultValue": "VNet",
@@ -276,6 +269,20 @@
             "metadata": {
                 "description": "Size of VMs in the cluster node type"
             }
+        },
+        "vmssAssignedIdentityName": {
+            "type": "string",
+            "defaultValue": "vmssIdentity",
+            "metadata": {
+                "description": "VMSS user assigned identity name for the cluster / vmss"
+            }
+         },
+        "vmssIdentityRoleNameGuid": {
+            "type": "string",
+            "defaultValue": "[newGuid()]",
+            "metadata": {
+                "description": "ps [guid]::newguid() one time. https://docs.microsoft.com/en-us/azure/service-fabric/how-to-managed-identity-managed-cluster-virtual-machine-scale-sets"
+            }
         }
     },
     "variables": {
@@ -291,9 +298,33 @@
         "lbPoolID0": "[concat(variables('lbID0'),'/backendAddressPools/LoadBalancerBEAddressPool')]",
         "lbProbeID0": "[concat(variables('lbID0'),'/probes/FabricGatewayProbe')]",
         "lbHttpProbeID0": "[concat(variables('lbID0'),'/probes/FabricHttpGatewayProbe')]",
-        "lbNatPoolID0": "[concat(variables('lbID0'),'/inboundNatPools/LoadBalancerBEAddressNatPool')]"
+        "lbNatPoolID0": "[concat(variables('lbID0'),'/inboundNatPools/LoadBalancerBEAddressNatPool')]",
+        "roleDefinitions":"[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/')]", 
+        "storageContributor": "[concat(variables('roleDefinitions'), 'b24988ac-6180-42a0-ab88-20f7382dd24c')]",
+        //"storageBlobContributor": "[concat(variables('roleDefinitions'), 'ba92f5b4-2d11-453d-a403-e96b0029c9fe')]",
+        //"storageTableContributor": "[concat(variables('roleDefinitions'), 'a0e8be4e-6d6d-4e1a-b780-7a8e4a4d4e5d')]"
     },
     "resources": [
+        {
+            "type": "Microsoft.ManagedIdentity/userAssignedIdentities",
+            "name": "[parameters('vmssAssignedIdentityName')]",
+            "apiVersion": "2023-01-31",
+            "location": "[resourceGroup().location]"
+        },
+        {
+            "type": "Microsoft.Authorization/roleAssignments",
+            "apiVersion": "2022-04-01",
+            "name": "[parameters('vmssIdentityRoleNameGuid')]",
+            // "scope": "[concat('Microsoft.ManagedIdentity/userAssignedIdentities', '/', parameters('vmssAssignedIdentityName'))]",
+            "dependsOn": [
+                "[concat('Microsoft.ManagedIdentity/userAssignedIdentities/', parameters('vmssAssignedIdentityName'))]"
+            ],
+            "properties": {
+                "roleDefinitionId": "[variables('storageContributor')]",
+                "principalId": "[reference(parameters('vmssAssignedIdentityName')).principalId]",
+                "principalType": "ServicePrincipal"
+            }
+        },
         {
             "apiVersion": "[variables('storageApiVersion')]",
             "type": "Microsoft.Storage/storageAccounts",
@@ -626,11 +657,18 @@
             "type": "Microsoft.Compute/virtualMachineScaleSets",
             "name": "[parameters('vmNodeType0Name')]",
             "location": "[resourceGroup().location]",
+            "identity": {
+                "type": "UserAssigned",
+                "userAssignedIdentities": {
+                    "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', parameters('vmssAssignedIdentityName'))]": {}
+                }
+            },
             "dependsOn": [
                 "[concat('Microsoft.Network/virtualNetworks/', parameters('virtualNetworkName'))]",
                 "[concat('Microsoft.Network/loadBalancers/', concat('LB','-', parameters('clusterName'),'-',parameters('vmNodeType0Name')))]",
                 "[concat('Microsoft.Storage/storageAccounts/', parameters('supportLogStorageAccountName'))]",
-                "[concat('Microsoft.Storage/storageAccounts/', parameters('applicationDiagnosticsStorageAccountName'))]"
+                "[concat('Microsoft.Storage/storageAccounts/', parameters('applicationDiagnosticsStorageAccountName'))]",
+                "[concat('Microsoft.ManagedIdentity/userAssignedIdentities/', parameters('vmssAssignedIdentityName'))]"
             ],
             "properties": {
                 "overprovision": false,
@@ -648,10 +686,10 @@
                                 "properties": {
                                     "type": "ServiceFabricNode",
                                     "autoUpgradeMinorVersion": true,
-                                    "protectedSettings": {
-                                        "StorageAccountKey1": "[listKeys(resourceId('Microsoft.Storage/storageAccounts', parameters('supportLogStorageAccountName')),'2015-05-01-preview').key1]",
-                                        "StorageAccountKey2": "[listKeys(resourceId('Microsoft.Storage/storageAccounts', parameters('supportLogStorageAccountName')),'2015-05-01-preview').key2]"
-                                    },
+                                    // "protectedSettings": {
+                                    //     "StorageAccountKey1": "[listKeys(resourceId('Microsoft.Storage/storageAccounts', parameters('supportLogStorageAccountName')),'2015-05-01-preview').key1]",
+                                    //     "StorageAccountKey2": "[listKeys(resourceId('Microsoft.Storage/storageAccounts', parameters('supportLogStorageAccountName')),'2015-05-01-preview').key2]"
+                                    // },
                                     "publisher": "Microsoft.Azure.ServiceFabric",
                                     "settings": {
                                         "clusterEndpoint": "[reference(parameters('clusterName')).clusterEndpoint]",
@@ -801,12 +839,13 @@
             }
         },
         {
-            "apiVersion": "2021-06-01",
+            "apiVersion": "2023-11-01-preview",
             "type": "Microsoft.ServiceFabric/clusters",
             "name": "[parameters('clusterName')]",
             "location": "[resourceGroup().location]",
             "dependsOn": [
-                "[concat('Microsoft.Storage/storageAccounts/', parameters('supportLogStorageAccountName'))]"
+                "[concat('Microsoft.Storage/storageAccounts/', parameters('supportLogStorageAccountName'))]",
+                "[concat('Microsoft.ManagedIdentity/userAssignedIdentities/', parameters('vmssAssignedIdentityName'))]"
             ],
             "properties": {
                 "addonFeatures": [
@@ -835,7 +874,7 @@
                             },
                             {
                                 "name": "IdentityReference",
-                                "value": "[parameters('userAssignedIdentity')]"
+                                "value": "[parameters('vmssAssignedIdentityName')]"
                             }
                         ]
                     },
