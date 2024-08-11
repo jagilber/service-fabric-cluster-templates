@@ -874,7 +874,7 @@
                             },
                             {
                                 "name": "IdentityReference",
-                                "value": "[parameters('vmssAssignedIdentityName')]"
+                                "value": "[reference(parameters('vmssAssignedIdentityName')).clientId]"
                             }
                         ]
                     },
