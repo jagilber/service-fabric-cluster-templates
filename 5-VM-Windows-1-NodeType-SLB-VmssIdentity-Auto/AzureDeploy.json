@@ -315,7 +315,21 @@
             "type": "Microsoft.Authorization/roleAssignments",
             "apiVersion": "2022-04-01",
             "name": "[parameters('vmssIdentityRoleNameGuid')]",
-            // "scope": "[concat('Microsoft.ManagedIdentity/userAssignedIdentities', '/', parameters('vmssAssignedIdentityName'))]",
+            "scope": "[concat('Microsoft.Storage/storageAccounts/', parameters('supportLogStorageAccountName'))]",
+            "dependsOn": [
+                "[concat('Microsoft.ManagedIdentity/userAssignedIdentities/', parameters('vmssAssignedIdentityName'))]"
+            ],
+            "properties": {
+                "roleDefinitionId": "[variables('storageContributor')]",
+                "principalId": "[reference(parameters('vmssAssignedIdentityName')).principalId]",
+                "principalType": "ServicePrincipal"
+            }
+        },
+        {
+            "type": "Microsoft.Authorization/roleAssignments",
+            "apiVersion": "2022-04-01",
+            "name": "[parameters('vmssIdentityRoleNameGuid')]",
+            "scope": "[concat('Microsoft.Storage/storageAccounts/', parameters('applicationDiagnosticsStorageAccountName'))]",
             "dependsOn": [
                 "[concat('Microsoft.ManagedIdentity/userAssignedIdentities/', parameters('vmssAssignedIdentityName'))]"
             ],
