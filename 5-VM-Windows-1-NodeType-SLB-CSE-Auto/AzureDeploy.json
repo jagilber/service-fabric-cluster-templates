@@ -2,27 +2,6 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "aadClientApplication": {
-            "type": "string",
-            "defaultValue": "GEN-AAD-CLIENT-APP-ID",
-            "metadata": {
-                "description": "AAD Client Application Id"
-            }
-        },
-        "aadClusterApplication": {
-            "type": "string",
-            "defaultValue": "",
-            "metadata": {
-                "description": "AAD Cluster Application Id"
-            }
-        },
-        "aadTenantId": {
-            "type": "string",
-            "defaultValue": "",
-            "metadata": {
-                "description": "AAD Tenant Id"
-            }
-        },
         "addressPrefix": {
             "type": "string",
             "defaultValue": "10.0.0.0/16",
@@ -38,7 +17,7 @@
         },
         "adminUserName": {
             "type": "string",
-            "defaultValue": "testadm",
+            "defaultValue": "vmadmin",
             "metadata": {
                 "description": "Remote desktop user Id"
             }
@@ -61,18 +40,11 @@
                 "description": "Replication option for the VM image storage account"
             }
         },
-        "certificateCommonName": {
+        "certificateThumbprint": {
             "type": "string",
-            "defaultValue": "",
+            "defaultValue": "GEN-CUSTOM-DOMAIN-SSLCERT-THUMBPRINT",
             "metadata": {
-                "description": "Certificate Common Name"
-            }
-        },
-        "certificateIssuerThumbprint": {
-            "type": "string",
-            "defaultValue": "",
-            "metadata": {
-                "description": "Certificate Issuer Thumbprint"
+                "description": "Certificate Thumbprint"
             }
         },
         "certificateUrlValue": {
@@ -89,6 +61,21 @@
                 "description": "Name of your cluster - Between 3 and 23 characters. Letters and numbers only"
             }
         },
+        "customScriptExtensionFile": {
+            "defaultValue": "schedule-task.ps1",
+            "type": "string",
+            "metadata": {
+                "description": "script file name for custom script extension to execute"
+            }
+        },
+        "customScriptExtensionFileUri": {
+            "defaultValue": "https://raw.githubusercontent.com/Azure/Service-Fabric-Troubleshooting-Guides/master/scripts/schedule-task.ps1",
+            "type": "string",
+            "metadata": {
+                "description": "Location of the script file for custom script extension to execute"
+            }
+        },
+
         "dnsName": {
             "type": "string",
             "defaultValue": "[parameters('clusterName')]",
@@ -100,7 +87,7 @@
             "type": "string",
             "defaultValue": "Silver",
             "allowedValues": [
-                // "Bronze", // Bronze is not supported for automatic OS upgrade
+                //"Bronze", // automatic os image upgrade not supported for bronze
                 "Silver",
                 "Gold"
             ],
@@ -665,8 +652,29 @@
                     "extensionProfile": {
                         "extensions": [
                             {
+                                "name": "CustomScriptExtension",
+                                "properties": {
+                                    "publisher": "Microsoft.Compute",
+                                    "type": "CustomScriptExtension",
+                                    "typeHandlerVersion": "1.10",
+                                    "autoUpgradeMinorVersion": true,
+                                    "protectedSettings": {
+                                        "storageAccountName": "[parameters('supportLogStorageAccountName')]",
+                                        "storageAccountKey": "[listKeys(resourceId('Microsoft.Storage/storageAccounts', parameters('supportLogStorageAccountName')),'2015-05-01-preview').key1]",
+                                        "managedIdentity": {},
+                                        "fileUris": [
+                                            "[parameters('customScriptExtensionFileUri')]"
+                                        ],
+                                        "commandToExecute": "[parameters('customScriptExtensionFile')]"
+                                    }
+                                }
+                            },
+                            {
                                 "name": "[concat(parameters('vmNodeType0Name'),'_ServiceFabricNode')]",
                                 "properties": {
+                                    "provisionAfterExtensions": [
+                                        "CustomScriptExtension"
+                                    ],
                                     "type": "ServiceFabricNode",
                                     "autoUpgradeMinorVersion": true,
                                     "protectedSettings": {
@@ -682,9 +690,7 @@
                                         "enableParallelJobs": true,
                                         "nicPrefixOverride": "[parameters('subnet0Prefix')]",
                                         "certificate": {
-                                            "commonNames": [
-                                                "[parameters('certificateCommonName')]"
-                                            ],
+                                            "thumbprint": "[parameters('certificateThumbprint')]",
                                             "x509StoreName": "My"
                                         }
                                     },
@@ -835,18 +841,9 @@
                 "addonFeatures": [
                     "DnsService"
                 ],
-                "azureActiveDirectory": {
-                  "clientApplication": "[parameters('aadClientApplication')]",
-                  "clusterApplication": "[parameters('aadClusterApplication')]",
-                  "tenantId": "[parameters('aadTenantId')]"
-                },
-                "certificateCommonNames": {
-                    "commonNames": [
-                        {
-                            "certificateCommonName": "[parameters('certificateCommonName')]",
-                            "certificateIssuerThumbprint": "[parameters('certificateIssuerThumbprint')]"
-                        }
-                    ]
+                "certificate": {
+                    "thumbprint": "[parameters('certificateThumbprint')]",
+                    "x509StoreName": "My"
                 },
                 "clientCertificateThumbprints": [],
                 "clusterState": "Default",

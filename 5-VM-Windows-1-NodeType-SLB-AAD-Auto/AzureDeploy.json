@@ -152,7 +152,7 @@
         },
         "lbIPName": {
             "type": "string",
-            "defaultValue": "PublicIP-LB-FE",
+            "defaultValue": "PublicIP-SLB-FE",
             "metadata": {
                 "description": "Name of the public IP address used by the load balancer"
             }
@@ -300,7 +300,7 @@
         "publicIPApiVersion": "2022-07-01",
         "vnetID": "[resourceId('Microsoft.Network/virtualNetworks',parameters('virtualNetworkName'))]",
         "subnet0Ref": "[concat(variables('vnetID'),'/subnets/',parameters('subnet0Name'))]",
-        "lbID0": "[resourceId('Microsoft.Network/loadBalancers', concat('LB','-', parameters('clusterName'),'-',parameters('vmNodeType0Name')))]",
+        "lbID0": "[resourceId('Microsoft.Network/loadBalancers', concat('SLB','-', parameters('clusterName'),'-',parameters('vmNodeType0Name')))]",
         "lbIPConfig0": "[concat(variables('lbID0'),'/frontendIPConfigurations/LoadBalancerIPConfig')]",
         "lbPoolID0": "[concat(variables('lbID0'),'/backendAddressPools/LoadBalancerBEAddressPool')]",
         "lbProbeID0": "[concat(variables('lbID0'),'/probes/FabricGatewayProbe')]",
@@ -509,7 +509,7 @@
         {
             "apiVersion": "[variables('lbApiVersion')]",
             "type": "Microsoft.Network/loadBalancers",
-            "name": "[concat('LB','-', parameters('clusterName'),'-',parameters('vmNodeType0Name'))]",
+            "name": "[concat('SLB','-', parameters('clusterName'),'-',parameters('vmNodeType0Name'))]",
             "location": "[resourceGroup().location]",
             "sku": {
                 "name": "Standard"
@@ -642,7 +642,7 @@
             "location": "[resourceGroup().location]",
             "dependsOn": [
                 "[concat('Microsoft.Network/virtualNetworks/', parameters('virtualNetworkName'))]",
-                "[concat('Microsoft.Network/loadBalancers/', concat('LB','-', parameters('clusterName'),'-',parameters('vmNodeType0Name')))]",
+                "[concat('Microsoft.Network/loadBalancers/', concat('SLB','-', parameters('clusterName'),'-',parameters('vmNodeType0Name')))]",
                 "[concat('Microsoft.Storage/storageAccounts/', parameters('supportLogStorageAccountName'))]",
                 "[concat('Microsoft.Storage/storageAccounts/', parameters('applicationDiagnosticsStorageAccountName'))]"
             ],
