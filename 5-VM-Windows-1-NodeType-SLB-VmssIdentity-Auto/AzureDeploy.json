@@ -131,7 +131,7 @@
         },
         "lbIPName": {
             "type": "string",
-            "defaultValue": "PublicIP-LB-FE",
+            "defaultValue": "PublicIP-SLB-FE",
             "metadata": {
                 "description": "Name of the public IP address used by the load balancer"
             }
@@ -277,11 +277,25 @@
                 "description": "VMSS user assigned identity name for the cluster / vmss"
             }
          },
-        "vmssIdentityRoleNameGuid": {
+        "applicationDiagnosticsIdentityAssignmentId": {
             "type": "string",
             "defaultValue": "[newGuid()]",
             "metadata": {
-                "description": "ps [guid]::newguid() one time. https://docs.microsoft.com/en-us/azure/service-fabric/how-to-managed-identity-managed-cluster-virtual-machine-scale-sets"
+                "description": "ps [guid]::newguid() one time only per identity. patches should use existing id."
+            }
+        },
+        "supportLogIdentityAssignmentIdBlob": {
+            "type": "string",
+            "defaultValue": "[newGuid()]",
+            "metadata": {
+                "description": "ps [guid]::newguid() one time only per identity. patches should use existing id."
+            }
+        },
+        "supportLogIdentityAssignmentIdTable": {
+            "type": "string",
+            "defaultValue": "[newGuid()]",
+            "metadata": {
+                "description": "ps [guid]::newguid() one time only per identity. patches should use existing id."
             }
         }
     },
@@ -293,16 +307,16 @@
         "publicIPApiVersion": "2022-07-01",
         "vnetID": "[resourceId('Microsoft.Network/virtualNetworks',parameters('virtualNetworkName'))]",
         "subnet0Ref": "[concat(variables('vnetID'),'/subnets/',parameters('subnet0Name'))]",
-        "lbID0": "[resourceId('Microsoft.Network/loadBalancers', concat('LB','-', parameters('clusterName'),'-',parameters('vmNodeType0Name')))]",
+        "lbID0": "[resourceId('Microsoft.Network/loadBalancers', concat('SLB','-', parameters('clusterName'),'-',parameters('vmNodeType0Name')))]",
         "lbIPConfig0": "[concat(variables('lbID0'),'/frontendIPConfigurations/LoadBalancerIPConfig')]",
         "lbPoolID0": "[concat(variables('lbID0'),'/backendAddressPools/LoadBalancerBEAddressPool')]",
         "lbProbeID0": "[concat(variables('lbID0'),'/probes/FabricGatewayProbe')]",
         "lbHttpProbeID0": "[concat(variables('lbID0'),'/probes/FabricHttpGatewayProbe')]",
         "lbNatPoolID0": "[concat(variables('lbID0'),'/inboundNatPools/LoadBalancerBEAddressNatPool')]",
         "roleDefinitions":"[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/')]", 
-        "storageContributor": "[concat(variables('roleDefinitions'), 'b24988ac-6180-42a0-ab88-20f7382dd24c')]",
-        //"storageBlobContributor": "[concat(variables('roleDefinitions'), 'ba92f5b4-2d11-453d-a403-e96b0029c9fe')]",
-        //"storageTableContributor": "[concat(variables('roleDefinitions'), 'a0e8be4e-6d6d-4e1a-b780-7a8e4a4d4e5d')]"
+        //"contributor": "[concat(variables('roleDefinitions'), 'b24988ac-6180-42a0-ab88-20f7382dd24c')]",
+        "storageBlobContributor": "[concat(variables('roleDefinitions'), 'ba92f5b4-2d11-453d-a403-e96b0029c9fe')]",
+        "storageTableContributor": "[concat(variables('roleDefinitions'), '0a9a7e1f-b9d0-4cc4-a60d-0319b160aaa3')]"
     },
     "resources": [
         {
@@ -314,13 +328,13 @@
         {
             "type": "Microsoft.Authorization/roleAssignments",
             "apiVersion": "2022-04-01",
-            "name": "[parameters('vmssIdentityRoleNameGuid')]",
+            "name": "[parameters('supportLogIdentityAssignmentIdBlob')]",
             "scope": "[concat('Microsoft.Storage/storageAccounts/', parameters('supportLogStorageAccountName'))]",
             "dependsOn": [
                 "[concat('Microsoft.ManagedIdentity/userAssignedIdentities/', parameters('vmssAssignedIdentityName'))]"
             ],
             "properties": {
-                "roleDefinitionId": "[variables('storageContributor')]",
+                "roleDefinitionId": "[variables('storageBlobContributor')]",
                 "principalId": "[reference(parameters('vmssAssignedIdentityName')).principalId]",
                 "principalType": "ServicePrincipal"
             }
@@ -328,13 +342,27 @@
         {
             "type": "Microsoft.Authorization/roleAssignments",
             "apiVersion": "2022-04-01",
-            "name": "[parameters('vmssIdentityRoleNameGuid')]",
+            "name": "[parameters('supportLogIdentityAssignmentIdTable')]",
+            "scope": "[concat('Microsoft.Storage/storageAccounts/', parameters('supportLogStorageAccountName'))]",
+            "dependsOn": [
+                "[concat('Microsoft.ManagedIdentity/userAssignedIdentities/', parameters('vmssAssignedIdentityName'))]"
+            ],
+            "properties": {
+                "roleDefinitionId": "[variables('storageTableContributor')]",
+                "principalId": "[reference(parameters('vmssAssignedIdentityName')).principalId]",
+                "principalType": "ServicePrincipal"
+            }
+        },
+        {
+            "type": "Microsoft.Authorization/roleAssignments",
+            "apiVersion": "2022-04-01",
+            "name": "[parameters('applicationDiagnosticsIdentityAssignmentId')]",
             "scope": "[concat('Microsoft.Storage/storageAccounts/', parameters('applicationDiagnosticsStorageAccountName'))]",
             "dependsOn": [
                 "[concat('Microsoft.ManagedIdentity/userAssignedIdentities/', parameters('vmssAssignedIdentityName'))]"
             ],
             "properties": {
-                "roleDefinitionId": "[variables('storageContributor')]",
+                "roleDefinitionId": "[variables('storageTableContributor')]",
                 "principalId": "[reference(parameters('vmssAssignedIdentityName')).principalId]",
                 "principalType": "ServicePrincipal"
             }
@@ -540,7 +568,7 @@
         {
             "apiVersion": "[variables('lbApiVersion')]",
             "type": "Microsoft.Network/loadBalancers",
-            "name": "[concat('LB','-', parameters('clusterName'),'-',parameters('vmNodeType0Name'))]",
+            "name": "[concat('SLB','-', parameters('clusterName'),'-',parameters('vmNodeType0Name'))]",
             "location": "[resourceGroup().location]",
             "sku": {
                 "name": "Standard"
@@ -679,7 +707,7 @@
             },
             "dependsOn": [
                 "[concat('Microsoft.Network/virtualNetworks/', parameters('virtualNetworkName'))]",
-                "[concat('Microsoft.Network/loadBalancers/', concat('LB','-', parameters('clusterName'),'-',parameters('vmNodeType0Name')))]",
+                "[concat('Microsoft.Network/loadBalancers/', concat('SLB','-', parameters('clusterName'),'-',parameters('vmNodeType0Name')))]",
                 "[concat('Microsoft.Storage/storageAccounts/', parameters('supportLogStorageAccountName'))]",
                 "[concat('Microsoft.Storage/storageAccounts/', parameters('applicationDiagnosticsStorageAccountName'))]",
                 "[concat('Microsoft.ManagedIdentity/userAssignedIdentities/', parameters('vmssAssignedIdentityName'))]"
