@@ -301,7 +301,16 @@
             "location": "[resourceGroup().location]",
             "dependsOn": [],
             "properties": {
-                "allowBlobPublicAccess": false
+                "allowBlobPublicAccess": false,
+                "privateEndpointConnections": [],
+                "minimumTlsVersion": "TLS1_2",
+                "networkAcls": {
+                    "bypass": "AzureServices",
+                    "virtualNetworkRules": [],
+                    "ipRules": [],
+                    "defaultAction": "Allow"
+                },
+                "supportsHttpsTrafficOnly": true
             },
             "kind": "StorageV2",
             "sku": {
@@ -320,7 +329,16 @@
             "location": "[resourceGroup().location]",
             "dependsOn": [],
             "properties": {
-                "allowBlobPublicAccess": false
+                "allowBlobPublicAccess": false,
+                "privateEndpointConnections": [],
+                "minimumTlsVersion": "TLS1_2",
+                "networkAcls": {
+                    "bypass": "AzureServices",
+                    "virtualNetworkRules": [],
+                    "ipRules": [],
+                    "defaultAction": "Allow"
+                },
+                "supportsHttpsTrafficOnly": true
             },
             "kind": "StorageV2",
             "sku": {

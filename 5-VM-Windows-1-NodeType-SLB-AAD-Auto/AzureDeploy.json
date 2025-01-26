@@ -315,7 +315,16 @@
             "location": "[resourceGroup().location]",
             "dependsOn": [],
             "properties": {
-                "allowBlobPublicAccess": false
+                "allowBlobPublicAccess": false,
+                "privateEndpointConnections": [],
+                "minimumTlsVersion": "TLS1_2",
+                "networkAcls": {
+                    "bypass": "AzureServices",
+                    "virtualNetworkRules": [],
+                    "ipRules": [],
+                    "defaultAction": "Allow"
+                },
+                "supportsHttpsTrafficOnly": true
             },
             "kind": "StorageV2",
             "sku": {
@@ -334,7 +343,16 @@
             "location": "[resourceGroup().location]",
             "dependsOn": [],
             "properties": {
-                "allowBlobPublicAccess": false
+                "allowBlobPublicAccess": false,
+                "privateEndpointConnections": [],
+                "minimumTlsVersion": "TLS1_2",
+                "networkAcls": {
+                    "bypass": "AzureServices",
+                    "virtualNetworkRules": [],
+                    "ipRules": [],
+                    "defaultAction": "Allow"
+                },
+                "supportsHttpsTrafficOnly": true
             },
             "kind": "StorageV2",
             "sku": {
@@ -830,9 +848,9 @@
                     "DnsService"
                 ],
                 "azureActiveDirectory": {
-                  "clientApplication": "[parameters('aadClientApplication')]",
-                  "clusterApplication": "[parameters('aadClusterApplication')]",
-                  "tenantId": "[parameters('aadTenantId')]"
+                    "clientApplication": "[parameters('aadClientApplication')]",
+                    "clusterApplication": "[parameters('aadClusterApplication')]",
+                    "tenantId": "[parameters('aadTenantId')]"
                 },
                 "certificate": {
                     "thumbprint": "[parameters('certificateThumbprint')]",
