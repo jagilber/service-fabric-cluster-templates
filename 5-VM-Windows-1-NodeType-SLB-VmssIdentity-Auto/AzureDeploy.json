@@ -276,7 +276,7 @@
             "metadata": {
                 "description": "VMSS user assigned identity name for the cluster / vmss"
             }
-         },
+        },
         "applicationDiagnosticsIdentityAssignmentId": {
             "type": "string",
             "defaultValue": "[newGuid()]",
@@ -313,7 +313,7 @@
         "lbProbeID0": "[concat(variables('lbID0'),'/probes/FabricGatewayProbe')]",
         "lbHttpProbeID0": "[concat(variables('lbID0'),'/probes/FabricHttpGatewayProbe')]",
         "lbNatPoolID0": "[concat(variables('lbID0'),'/inboundNatPools/LoadBalancerBEAddressNatPool')]",
-        "roleDefinitions":"[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/')]", 
+        "roleDefinitions": "[concat('/subscriptions/', subscription().subscriptionId, '/providers/Microsoft.Authorization/roleDefinitions/')]",
         //"contributor": "[concat(variables('roleDefinitions'), 'b24988ac-6180-42a0-ab88-20f7382dd24c')]",
         "storageBlobContributor": "[concat(variables('roleDefinitions'), 'ba92f5b4-2d11-453d-a403-e96b0029c9fe')]",
         "storageTableContributor": "[concat(variables('roleDefinitions'), '0a9a7e1f-b9d0-4cc4-a60d-0319b160aaa3')]"
@@ -374,7 +374,16 @@
             "location": "[resourceGroup().location]",
             "dependsOn": [],
             "properties": {
-                "allowBlobPublicAccess": false
+                "allowBlobPublicAccess": false,
+                "privateEndpointConnections": [],
+                "minimumTlsVersion": "TLS1_2",
+                "networkAcls": {
+                    "bypass": "AzureServices",
+                    "virtualNetworkRules": [],
+                    "ipRules": [],
+                    "defaultAction": "Allow"
+                },
+                "supportsHttpsTrafficOnly": true
             },
             "kind": "StorageV2",
             "sku": {
@@ -393,7 +402,16 @@
             "location": "[resourceGroup().location]",
             "dependsOn": [],
             "properties": {
-                "allowBlobPublicAccess": false
+                "allowBlobPublicAccess": false,
+                "privateEndpointConnections": [],
+                "minimumTlsVersion": "TLS1_2",
+                "networkAcls": {
+                    "bypass": "AzureServices",
+                    "virtualNetworkRules": [],
+                    "ipRules": [],
+                    "defaultAction": "Allow"
+                },
+                "supportsHttpsTrafficOnly": true
             },
             "kind": "StorageV2",
             "sku": {
