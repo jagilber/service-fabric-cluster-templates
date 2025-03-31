@@ -290,7 +290,7 @@
                 "adminPassword": "[parameters('adminPassword')]",
                 "clientConnectionPort": 19000,
                 "httpGatewayConnectionPort": 19080,
-                "allowRdpAccess": true,
+                "allowRdpAccess": false,
                 "enableIpv6": false,
                 "addonFeatures": [
                     "DnsService"
