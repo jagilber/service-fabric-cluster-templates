@@ -291,6 +291,7 @@
                 "clientConnectionPort": 19000,
                 "httpGatewayConnectionPort": 19080,
                 "allowRdpAccess": false,
+                "enableAutoOSUpgrade": true,
                 "enableIpv6": false,
                 "addonFeatures": [
                     "DnsService"
