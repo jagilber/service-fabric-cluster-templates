@@ -103,8 +103,6 @@
             "type": "Microsoft.Resources/deployments",
             "resourceGroup": "[variables('subnetResourceGroup')]",
             "dependsOn": [
-                // "[concat('Microsoft.Authorization/roleAssignments/', parameters('managedIdentityAssignmentName'))]",
-                // "[concat('Microsoft.ManagedIdentity/userAssignedIdentities/', parameters('userAssignedIdentityName'))]"
             ],
             "properties": {
                 "mode": "Incremental",
@@ -118,41 +116,32 @@
                     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
                     "contentVersion": "1.0.0.0",
                     "parameters": {
-                        "managedIdentityAssignmentName": {
-                            "type": "string",
-                            "defaultValue": "[guid(resourceGroup().name)]"
-                        },
                         "sfrpProviderGuid": {
-                            "type": "string",
-                            "defaultValue": "[parameters('sfrpProviderGuid')]"
+                            "type": "string"
                         },
                         "subnetId": {
-                            "type": "string",
-                            "defaultValue": ""
+                            "type": "string"
                         }
                     },
                     "variables": {
-                        "managedIdentityOperator": "[resourceId('Microsoft.Authorization/roleDefinitions', 'f1a07417-d97a-45cb-824c-7a7467783830')]", // managed identity operator
+                        "networkContributorId": "[resourceId('Microsoft.Authorization/roleDefinitions', '4d97b98b-1d4f-4787-a291-c67834d212e7')]", // network contributor
+                        "networkContributorAssignmentName": "[guid(concat(variables('networkContributorId'), resourceGroup().name))]"
                     },
                     "resources": [
                         {
                             "type": "Microsoft.Authorization/roleAssignments",
                             "apiVersion": "2022-04-01",
-                            "name": "[parameters('managedIdentityAssignmentName')]",
+                            "name": "[variables('networkContributorAssignmentName')]",
                             "scope": "[parameters('subnetId')]",
-                            "dependsOn": [
-                            ],
+                            "dependsOn": [],
                             "properties": {
-                                "roleDefinitionId": "[variables('managedIdentityOperator')]",
+                                "roleDefinitionId": "[variables('networkContributorId')]",
                                 "principalId": "[parameters('sfrpProviderGuid')]"
                             }
                         }
                     ]
                 },
                 "parameters": {
-                    "managedIdentityAssignmentName": {
-                        "value": "[parameters('managedIdentityAssignmentName')]"
-                    },
                     "sfrpProviderGuid": {
                         "value": "[parameters('sfrpProviderGuid')]"
                     },
