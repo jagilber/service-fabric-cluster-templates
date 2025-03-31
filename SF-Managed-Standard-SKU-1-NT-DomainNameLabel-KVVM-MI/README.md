@@ -15,6 +15,43 @@ By default, to connect to a managed cluster, the cluster certificate thumbprint 
 
 Go through the process of creating the cluster as described in [Deploy a Service Fabric managed cluster](https://docs.microsoft.com/azure/service-fabric/tutorial-managed-cluster-deploy)
 
+## Use Powershell to connect to your cluster
+
+```powershell
+import-module servicefabric
+import-module az.resources
+
+$location = '<location>'
+$clusterName = '<cluster name>'
+$clusterResource = Get-AzResource -ResourceGroupName $resourceGroupName `
+  -Name $clusterName `
+  -ResourceType 'Microsoft.ServiceFabric/managedclusters' `
+  -ExpandProperties
+$serverCertThumbprint = $clusterResource.Properties.clusterCertificateThumbprints
+$clusterFqdn = $clusterResource.Properties.fqdn
+$clusterEndpoint = "$($clusterFqdn):19000"
+
+# if using client thumbprint
+Connect-ServiceFabricCluster -ConnectionEndpoint $clusterEndpoint `
+        -ServerCommonName $clusterFqdn `
+        -StoreLocation CurrentUser `
+        -StoreName My `
+        -X509Credential `
+        -FindType FindByThumbprint `
+        -FindValue '<client certificate thumbprint>' `
+        -Verbose
+
+# or if using client common name
+Connect-ServiceFabricCluster -ConnectionEndpoint $clusterEndpoint `
+    -ServerCommonName $clusterFqdn `
+    -StoreLocation CurrentUser `
+    -StoreName My `
+    -X509Credential `
+    -FindType FindBySubjectName `
+    -FindValue '<client certificate subject name>' `
+    -Verbose
+```
+
 ## Resources
 
 For more info, see:
