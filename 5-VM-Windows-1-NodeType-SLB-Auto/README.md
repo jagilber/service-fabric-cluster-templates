@@ -44,6 +44,38 @@ You can download the .PFX from the key vault from the portal
 
 Go through the process of creating the cluster as described in [Creating Service Fabric Cluster via arm](https://docs.microsoft.com/azure/service-fabric/service-fabric-cluster-creation-via-arm)
 
+## Use Powershell to connect to your cluster
+
+Execute from a windows powershell command prompt with the Service Fabric SDK installed. The Service Fabric SDK can be installed from the [Download and install the runtime and SDK](https://learn.microsoft.com/azure/service-fabric/service-fabric-get-started) page.
+
+```powershell
+$location = '<location>'
+$clusterName = '<cluster name>'
+$serverCertThumbprint = '<cluster certificate thumbprint>'
+
+$clusterFqdn = "$clusterName.$location.cloudapp.azure.com"
+$clusterEndpoint = "$($clusterFqdn):19000"
+import-module servicefabric
+# if using client thumbprint
+Connect-ServiceFabricCluster -ConnectionEndpoint $clusterEndpoint `
+    -ServerCertThumbprint $serverCertThumbprint `
+    -StoreLocation CurrentUser `
+    -StoreName My `
+    -X509Credential `
+    -FindType FindByThumbprint `
+    -FindValue '<client certificate thumbprint>' `
+    -Verbose
+# or if using client common name
+Connect-ServiceFabricCluster -ConnectionEndpoint $clusterEndpoint `
+    -ServerCertThumbprint $serverCertThumbprint `
+    -StoreLocation CurrentUser `
+    -StoreName My `
+    -X509Credential `
+    -FindType FindBySubjectName `
+    -FindValue '<client certificate subject name>' `
+    -Verbose
+```
+
 ## Creating a custom ARM template
 
 If you are wanting to create a custom ARM template for your cluster, then you have two choices.

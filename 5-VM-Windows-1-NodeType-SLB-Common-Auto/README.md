@@ -1,7 +1,7 @@
 # 5 Node 1 node type Windows Service Fabric Cluster with standard load balancer, NSG, Automatic OS Upgrade, and common name certificate
 
-[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure-Samples%2Fservice-fabric-cluster-templates%2Fmaster%2F5-VM-Windows-1-NodeType-SLB-Auto%2FAzureDeploy.json)
-[![Visualize](http://armviz.io/visualizebutton.png)](http://armviz.io/#/?load=https%3A%2F%2Fraw.githubusercontent.com%2FAzure-Samples%2Fservice-fabric-cluster-templates%2Fmaster%2F5-VM-Windows-1-NodeType-SLB-Auto%2FAzureDeploy.json)
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure-Samples%2Fservice-fabric-cluster-templates%2Fmaster%2F5-VM-Windows-1-NodeType-SLB-Common-Auto%2FAzureDeploy.json)
+[![Visualize](http://armviz.io/visualizebutton.png)](http://armviz.io/#/?load=https%3A%2F%2Fraw.githubusercontent.com%2FAzure-Samples%2Fservice-fabric-cluster-templates%2Fmaster%2F5-VM-Windows-1-NodeType-SLB-Common-Auto%2FAzureDeploy.json)
 
 This template allows you to deploy a secure 5 node, 1 Node Type Service Fabric Cluster with Standard load balancer running Windows Server 2022 Datacenter on a Standard_DS4_v2 Size Virtual Machine Scale set. Additionally, this template is configured to use certificate common name (subject name) instead of thumbprint which is a Service Fabric best practice.
 
@@ -47,6 +47,38 @@ You can download the .PFX from the key vault from the portal
 ## Use Powershell to deploy your cluster
 
 Go through the process of creating the cluster as described in [Creating Service Fabric Cluster via arm](https://docs.microsoft.com/azure/service-fabric/service-fabric-cluster-creation-via-arm)
+
+## Use Powershell to connect to your cluster
+
+Execute from a windows powershell command prompt with the Service Fabric SDK installed. The Service Fabric SDK can be installed from the [Download and install the runtime and SDK](https://learn.microsoft.com/azure/service-fabric/service-fabric-get-started) page.
+
+```powershell
+$location = '<location>'
+$clusterName = '<cluster name>'
+$serverCertThumbprint = '<cluster certificate thumbprint>'
+
+$clusterFqdn = "$clusterName.$location.cloudapp.azure.com"
+$clusterEndpoint = "$($clusterFqdn):19000"
+import-module servicefabric
+# if using client thumbprint
+Connect-ServiceFabricCluster -ConnectionEndpoint $clusterEndpoint `
+    -ServerCommonName $serverCertThumbprint `
+    -StoreLocation CurrentUser `
+    -StoreName My `
+    -X509Credential `
+    -FindType FindByThumbprint `
+    -FindValue '<client certificate thumbprint>' `
+    -Verbose
+# or if using client common name
+Connect-ServiceFabricCluster -ConnectionEndpoint $clusterEndpoint `
+    -ServerCommonName $serverCertThumbprint `
+    -StoreLocation CurrentUser `
+    -StoreName My `
+    -X509Credential `
+    -FindType FindBySubjectName `
+    -FindValue '<client certificate subject name>' `
+    -Verbose
+```
 
 ## Creating a custom ARM template
 

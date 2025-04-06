@@ -7,26 +7,26 @@ This template allows you to deploy a secure 5 node, 1 Node Type Service Fabric C
 
 ## Template Configuration
 
-- Cluster Reliability Level: Silver or higher
-- Certificate Thumbprint configuration
-- VMSS Identity configuration
-- Automatic OS Upgrade configuration
+-   Cluster Reliability Level: Silver or higher
+-   Certificate Thumbprint configuration
+-   VMSS Identity configuration
+-   Automatic OS Upgrade configuration
 
 ## Template Resources
 
-- 1 service fabric cluster
-- 1 vm scale set / node type
-  - 5 nodes / virtual machines
-  - 2 extensions
-    - Service Fabric
-    - Iaas Diagnostic
-- 1 standard load balancer
-- 1 public IP address
-- 1 network security group
-- 1 virtual network
-- 2 storage account v2
-  - diagnostics
-  - service fabric logs
+-   1 service fabric cluster
+-   1 vm scale set / node type
+    -   5 nodes / virtual machines
+    -   2 extensions
+        -   Service Fabric
+        -   Iaas Diagnostic
+-   1 standard load balancer
+-   1 public IP address
+-   1 network security group
+-   1 virtual network
+-   2 storage account v2
+    -   diagnostics
+    -   service fabric logs
 
 ## Certificate needed for the template if using the 'Deploy to Azure' button above
 
@@ -36,14 +36,47 @@ This template assumes that you already have certificates uploaded to your key va
 
 You can download the .PFX from the key vault from the portal
 
-- Go to the key vault resource
-- navigate to the secrets tab and download the .pfx
+-   Go to the key vault resource
+-   navigate to the secrets tab and download the .pfx
 
 ![DownloadCert]
 
 ## Use Powershell to deploy your cluster
 
 Go through the process of creating the cluster as described in [Creating Service Fabric Cluster via arm](https://docs.microsoft.com/azure/service-fabric/service-fabric-cluster-creation-via-arm)
+
+## Use Powershell to connect to your cluster
+
+Execute from a windows powershell command prompt with the Service Fabric SDK installed. The Service Fabric SDK can be installed from the [Download and install the runtime and SDK](https://learn.microsoft.com/azure/service-fabric/service-fabric-get-started) page.
+
+```powershell
+$location = '<location>'
+$clusterName = '<cluster name>'
+$serverCertThumbprint = '<cluster certificate thumbprint>'
+$clientCertThumbprint = '<client certificate thumbprint>'
+
+$clusterFqdn = "$clusterName.$location.cloudapp.azure.com"
+$clusterEndpoint = "$($clusterFqdn):19000"
+import-module servicefabric
+# if using client thumbprint
+Connect-ServiceFabricCluster -ConnectionEndpoint $clusterEndpoint `
+    -ServerCertThumbprint $serverCertThumbprint `
+    -StoreLocation CurrentUser `
+    -StoreName My `
+    -X509Credential `
+    -FindType FindByThumbprint `
+    -FindValue '<client certificate thumbprint>' `
+    -Verbose
+# or if using client common name
+Connect-ServiceFabricCluster -ConnectionEndpoint $clusterEndpoint `
+    -ServerCertThumbprint $serverCertThumbprint `
+    -StoreLocation CurrentUser `
+    -StoreName My `
+    -X509Credential `
+    -FindType FindBySubjectName `
+    -FindValue '<client certificate subject name>' `
+    -Verbose
+```
 
 ## Creating a custom ARM template
 
@@ -53,12 +86,13 @@ If you are wanting to create a custom ARM template for your cluster, then you ha
 2. Log into the azure portal and use the service fabric portal pages to generate the template for you to customize.
 
     - Log on to the Azure Portal [http://aka.ms/servicefabricportal](http://aka.ms/servicefabricportal).
-    - Go through the process of creating the cluster as described in [Creating Service Fabric Cluster via portal](https://docs.microsoft.com/azure/service-fabric/service-fabric-cluster-creation-via-portal) , but do not click on ***create**, instead go to Summary and download the template and parameters.
+    - Go through the process of creating the cluster as described in [Creating Service Fabric Cluster via portal](https://docs.microsoft.com/azure/service-fabric/service-fabric-cluster-creation-via-portal) , but do not click on **\*create**, instead go to Summary and download the template and parameters.
 
- ![DownloadTemplate][DownloadTemplate]
+![DownloadTemplate][DownloadTemplate]
 
 Unzip the downloaded .zip on your local machine, make any changes to template or the parameter file as you need.
 
 <!--Image references-->
+
 [DownloadTemplate]: ../media/DownloadTemplate.png
 [DownloadCert]: ../media/DownloadCert.PNG
