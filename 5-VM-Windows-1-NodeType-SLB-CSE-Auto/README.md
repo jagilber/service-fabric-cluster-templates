@@ -52,13 +52,14 @@ Go through the process of creating the cluster as described in [Creating Service
 Execute from a windows powershell command prompt with the Service Fabric SDK installed. The Service Fabric SDK can be installed from the [Download and install the runtime and SDK](https://learn.microsoft.com/azure/service-fabric/service-fabric-get-started) page.
 
 ```powershell
+import-module servicefabric
+
 $location = '<location>'
 $clusterName = '<cluster name>'
 $serverCertThumbprint = '<cluster certificate thumbprint>'
 
 $clusterFqdn = "$clusterName.$location.cloudapp.azure.com"
 $clusterEndpoint = "$($clusterFqdn):19000"
-import-module servicefabric
 # if using client thumbprint
 Connect-ServiceFabricCluster -ConnectionEndpoint $clusterEndpoint `
     -ServerCertThumbprint $serverCertThumbprint `

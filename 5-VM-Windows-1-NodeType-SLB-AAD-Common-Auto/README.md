@@ -29,9 +29,11 @@ Detailed information about cluster certificates: [Manage certificates in Service
 - 1 service fabric cluster
 - 1 vm scale set / node type
   - 5 nodes / virtual machines
-  - 2 extensions
+  - 3 extensions
     - Service Fabric
     - Iaas Diagnostic
+    - Key Vault Virtual Machine (KVVM) extension
+- 1 User Assigned Managed Identity (UAMI) for KVVM extension
 - 1 standard load balancer
 - 1 public IP address
 - 1 network security group
@@ -62,13 +64,14 @@ Go through the process of creating the cluster as described in [Creating Service
 Execute from a windows powershell command prompt with the Service Fabric SDK installed. The Service Fabric SDK can be installed from the [Download and install the runtime and SDK](https://learn.microsoft.com/azure/service-fabric/service-fabric-get-started) page.
 
 ```powershell
+import-module servicefabric
+
 $location = '<location>'
 $clusterName = '<cluster name>'
 $serverCommonName = '<cluster certificate subject name>'
 
 $clusterFqdn = "$clusterName.$location.cloudapp.azure.com"
 $clusterEndpoint = "$($clusterFqdn):19000"
-import-module servicefabric
 Connect-ServiceFabricCluster -ConnectionEndpoint $clusterEndpoint `
     -ServerCommonName $serverCommonName `
     -AzureActiveDirectory `

@@ -7,26 +7,26 @@ This template allows you to deploy a secure 5 node, 1 Node Type Service Fabric C
 
 ## Template Configuration
 
--   Cluster Reliability Level: Silver or higher
--   Certificate Thumbprint configuration
--   VMSS Identity configuration
--   Automatic OS Upgrade configuration
+- Cluster Reliability Level: Silver or higher
+- Certificate Thumbprint configuration
+- VMSS Identity configuration
+- Automatic OS Upgrade configuration
 
 ## Template Resources
 
--   1 service fabric cluster
--   1 vm scale set / node type
-    -   5 nodes / virtual machines
-    -   2 extensions
-        -   Service Fabric
-        -   Iaas Diagnostic
--   1 standard load balancer
--   1 public IP address
--   1 network security group
--   1 virtual network
--   2 storage account v2
-    -   diagnostics
-    -   service fabric logs
+- 1 service fabric cluster
+- 1 vm scale set / node type
+  - 5 nodes / virtual machines
+  - 2 extensions
+    - Service Fabric
+    - Iaas Diagnostic
+- 1 standard load balancer
+- 1 public IP address
+- 1 network security group
+- 1 virtual network
+- 2 storage account v2
+  - diagnostics
+  - service fabric logs
 
 ## Certificate needed for the template if using the 'Deploy to Azure' button above
 
@@ -36,8 +36,8 @@ This template assumes that you already have certificates uploaded to your key va
 
 You can download the .PFX from the key vault from the portal
 
--   Go to the key vault resource
--   navigate to the secrets tab and download the .pfx
+- Go to the key vault resource
+- navigate to the secrets tab and download the .pfx
 
 ![DownloadCert]
 
@@ -50,6 +50,8 @@ Go through the process of creating the cluster as described in [Creating Service
 Execute from a windows powershell command prompt with the Service Fabric SDK installed. The Service Fabric SDK can be installed from the [Download and install the runtime and SDK](https://learn.microsoft.com/azure/service-fabric/service-fabric-get-started) page.
 
 ```powershell
+import-module servicefabric
+
 $location = '<location>'
 $clusterName = '<cluster name>'
 $serverCertThumbprint = '<cluster certificate thumbprint>'
@@ -57,7 +59,6 @@ $clientCertThumbprint = '<client certificate thumbprint>'
 
 $clusterFqdn = "$clusterName.$location.cloudapp.azure.com"
 $clusterEndpoint = "$($clusterFqdn):19000"
-import-module servicefabric
 # if using client thumbprint
 Connect-ServiceFabricCluster -ConnectionEndpoint $clusterEndpoint `
     -ServerCertThumbprint $serverCertThumbprint `
