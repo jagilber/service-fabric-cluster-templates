@@ -884,9 +884,13 @@
         }
     ],
     "outputs": {
-        "clusterProperties": {
+        "clusterName": {
             "value": "[reference(parameters('clusterName'))]",
             "type": "object"
+        },
+        "clusterEndpoint": {
+            "value": "[reference(parameters('clusterName')).clusterEndpoint]",
+            "type": "string"
         }
     }
 }

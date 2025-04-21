@@ -52,9 +52,9 @@ Both Identities and Role Assignment Ids are deployment unique. Initial deploymen
 ### Identities in this template
 
 - vmssAssignedIdentityName: The name of the VMSS identity. This is the name of the UAMI that will be created in the same resource group as the cluster.
-- applicationDiagnosticsIdentityAssignmentId: The role assignment id for the UAMI. This is the role assignment id that will be created in the same resource group as the cluster. This is used to assign the UAMI to the application diagnostics storage account.
-- supportLogIdentityAssignmentIdBlob: The role assignment id for the UAMI. This is the role assignment id that will be created in the same resource group as the cluster. This is used to assign the UAMI to the support log storage blob account.
-- supportLogIdentityAssignmentIdTable: The role assignment id for the UAMI. This is the role assignment id that will be created in the same resource group as the cluster. This is used to assign the UAMI to the support log storage table account.
+- applicationDiagnosticsIdentityId: The role assignment id for the UAMI. This is the role assignment id that will be created in the same resource group as the cluster. This is used to assign the UAMI to the application diagnostics storage account.
+- supportLogIdentityBlobId: The role assignment id for the UAMI. This is the role assignment id that will be created in the same resource group as the cluster. This is used to assign the UAMI to the support log storage blob account.
+- supportLogIdentityTableId: The role assignment id for the UAMI. This is the role assignment id that will be created in the same resource group as the cluster. This is used to assign the UAMI to the support log storage table account.
 
 > [!NOTE]  
 > If patching the cluster, the existing UAMI and Role Assignment Ids should be passed in as parameters to avoid creating new ones.

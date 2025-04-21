@@ -66,6 +66,8 @@ Both Identities and Role Assignment Ids are deployment unique. Initial deploymen
 ### Identities in this template
 
 - userAssignedIdentityName: The name of the UAMI to be created. This is a deployment unique name and will be auto generated if not provided.
+- userIdentitySecretUserId: The role assignment id for the UAMI. This is the role assignment id is used to provide `Secrets User` access to the key vault. This is a deployment unique guid and will be auto generated if not provided.
+- userIdentityKeyVaultReaderId: The role assignment id for the UAMI. This is the role assignment id is used to provide `Key Vault Reader` access to the key vault. This is a deployment unique guid and will be auto generated if not provided.
 
 > [!NOTE]  
 > If patching the cluster, the existing UAMI and Role Assignment Ids should be passed in as parameters to avoid creating new ones.
