@@ -799,8 +799,7 @@
             ],
             "properties": {
                 "addonFeatures": [
-                    "DnsService",
-                    "RepairManager"
+                    "DnsService"
                 ],
                 "certificate": {
                     "thumbprint": "[parameters('certificateThumbprint')]",

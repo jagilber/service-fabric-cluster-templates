@@ -948,8 +948,7 @@
             ],
             "properties": {
                 "addonFeatures": [
-                    "DnsService",
-                    "RepairManager"
+                    "DnsService"
                 ],
                 "certificateCommonNames": {
                     "commonNames": [

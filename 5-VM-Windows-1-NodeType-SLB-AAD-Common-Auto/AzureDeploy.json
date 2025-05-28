@@ -969,8 +969,7 @@
             ],
             "properties": {
                 "addonFeatures": [
-                    "DnsService",
-                    "RepairManager"
+                    "DnsService"
                 ],
                 "azureActiveDirectory": {
                     "clientApplication": "[parameters('aadClientApplication')]",
