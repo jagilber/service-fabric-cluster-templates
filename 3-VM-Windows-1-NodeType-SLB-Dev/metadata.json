@@ -1,0 +1,7 @@
+{
+  "itemDisplayName": "Deploy a 3 Node 1 Nodetype Windows Service Fabric Cluster with standard load balancer, NSG, and Automatic OS Upgrade with Bronze cluster configuration",
+  "description": "This template allows you to deploy a secure 3 node Service Fabric Cluster running Windows Server 2022 Datacenter on a Standard_DS4_v2 Size VMSS. Bronze clusters are considered development clusters and should not be used in production.",
+  "summary": "This template takes a minimum amount of parameters and deploys 3 Node Service Fabric Cluster running windows ",
+  "githubUsername": "jagilber",
+  "dateUpdated": "2025-9-08"
+}
