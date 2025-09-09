@@ -1,0 +1,129 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "adminPassword": {
+            "value": "GEN-PASSWORD"
+        },
+        "adminUsername": {
+            "value": "GEN-UNIQUE"
+        },
+        "certificateThumbprint": {
+            "value": "GEN-CUSTOM-DOMAIN-SSLCERT-THUMBPRINT"
+        },
+        "certificateUrlValue": {
+            "metadata": {
+                "description": "Secret URL of the SSL certificate in the key vault. Example: https://mykeyvault.vault.azure.net/secrets/mysslcert/1234567890abcdef"
+            },
+            "value": "GEN-KEYVAULT-SSL-SECRET-URI"
+        },
+        "dnsName": {
+            "metadata": {
+                "description": "DNS name for the cluster / load balancer"
+            },
+            "value": "GEN-UNIQUE"
+        },
+        "durabilityLevel": {
+            "metadata": {
+                "description": "Production workloads require a durability level of Silver or Gold to help avoid data loss from VM-level infrastructure requests."
+            },
+            "value": "Silver"
+        },
+        "enableAutomaticOSUpgrade": {
+            "metadata": {
+                "description": "Enable automatic OS upgrade. Requires durability level of Silver or Gold"
+            },
+            "value": true
+        },
+        "existingApplicationDiagnosticsStorageAccountName": {
+            "metadata": {
+                "description": "Name of the existing application diagnostics storage account"
+            },
+            "value": "GEN-EXISTING-APPDIAG-SA-NAME"
+        },
+        "existingApplicationDiagnosticsStorageAccountRGName": {
+            "metadata": {
+                "description": "Resource group name of the existing application diagnostics storage account"
+            },
+            "value": "GEN-EXISTING-APPDIAG-SA-RG-NAME"
+        },
+        "existingClusterName": {
+            "metadata": {
+                "description": "Name of the existing Service Fabric cluster"
+            },
+            "value": "GEN-UNIQUE"
+        },
+        "existingClusterRGName": {
+            "metadata": {
+                "description": "Resource group name of the existing Service Fabric cluster"
+            },
+            "value": "GEN-EXISTING-CLUSTER-RG-NAME"
+        },
+        "existingNodeTypeRef": {
+            "metadata": {
+                "description": "Name of the existing node type described in service fabric resource to which this additional node type will be added. Example: nodetype0"
+            },
+            "value": "GEN-EXISTING-NODETYPE-NAME"
+        },
+        "existingSubnetName": {
+            "metadata": {
+                "description": "Name of the existing subnet to which this additional node type will be added. Example: Subnet-0"
+            },
+            "value": "GEN-EXISTING-SUBNET-NAME"
+        },
+        "existingSupportLogStorageAccountName": {
+            "metadata": {
+                "description": "Name of the existing support log storage account"
+            },
+            "value": "GEN-EXISTING-SFLOGS-SA-NAME"
+        },
+        "existingSupportLogStorageAccountRGName": {
+            "metadata": {
+                "description": "Resource group name of the existing support log storage account"
+            },
+            "value": "GEN-EXISTING-SFLOGS-SA-RG-NAME"
+        },
+        "existingVnetName": {
+            "metadata": {
+                "description": "Name of the existing virtual network"
+            },
+            "value": "GEN-EXISTING-VNET-NAME"
+        },
+        "existingVnetRGName": {
+            "metadata": {
+                "description": "Name of the existing virtual network resource group"
+            },
+            "value": "GEN-EXISTING-VNET-RG-NAME"
+        },
+        "keyVaultResourceId": {
+            "metadata": {
+                "description": "Resource Id of the existing key vault. Example: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{keyVaultName}"
+            },
+            "value": "GEN-KEYVAULT-RESOURCE-ID"
+        },
+        "lbIPName": {
+            "metadata": {
+                "description": "Name of the new load balancer public IP. Example: PublicIP-SLB-FE1"
+            },
+            "value": "GEN-NEW-LB-PUBLIC-IP-NAME"
+        },
+        "ntInstanceCount": {
+            "metadata": {
+                "description": "Number of instances for node type 0. 5 is recommended for production workloads to ensure high availability."
+            },
+            "value": 5
+        },
+        "vmImageSku": {
+            "value": "2022-Datacenter"
+        },
+        "vmNodeTypeName": {
+            "metadata": {
+                "description": "Name of the new virtual machine scale set node type. Example: nodetype1"
+            },
+            "value": "GEN-NEW-VM-NODETYPE-NAME"
+        },
+        "vmNodeTypeSize": {
+            "value": "Standard_DS4_v2"
+        }
+    }
+}

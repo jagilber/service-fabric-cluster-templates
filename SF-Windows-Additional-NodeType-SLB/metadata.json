@@ -1,0 +1,7 @@
+{
+  "itemDisplayName": "Deploy an additional NodeType Windows Service Fabric Cluster with standard load balancer, NSG, and Automatic OS Upgrade",
+  "description": "This template allows you to deploy an additional node type to an existing Service Fabric Cluster running Windows Server 2022 Datacenter on a Standard_DS4_v2 Size VMSS. Bronze clusters are considered development clusters and should not be used in production.",
+  "summary": "This template takes a minimum amount of parameters and deploys an additional NodeType to an existing Service Fabric Cluster.",
+  "githubUsername": "jagilber",
+  "dateUpdated": "2025-9-9"
+}
