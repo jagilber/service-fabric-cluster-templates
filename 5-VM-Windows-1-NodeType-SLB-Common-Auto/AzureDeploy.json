@@ -1008,29 +1008,9 @@
         }
     ],
     "outputs": {
-         "clusterName": {
+        "clusterProperties": {
             "value": "[reference(parameters('clusterName'))]",
             "type": "object"
-        },
-        "clusterEndpoint": {
-            "value": "[reference(parameters('clusterName')).clusterEndpoint]",
-            "type": "string"
-        },
-        "userAssignedIdentityName": {
-            "value": "[parameters('userAssignedIdentityName')]",
-            "type": "string"
-        },
-        "userAssignedIdentityId": {
-            "value": "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', parameters('userAssignedIdentityName'))]",
-            "type": "string"
-        },
-        "userIdentitySecretUserId": {
-            "value": "[parameters('userIdentitySecretUserId')]",
-            "type": "string"
-        },
-        "userIdentityKeyVaultReaderId": {
-            "value": "[parameters('userIdentityKeyVaultReaderId')]",
-            "type": "string"
         }
     }
 }
