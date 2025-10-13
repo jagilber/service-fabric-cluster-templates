@@ -1,7 +1,7 @@
-# 5 Node 1 node type secure Windows Service Fabric Cluster with standard load balancer, NSG, Existing Vnet, and Automatic OS Upgrade
+# 5 Node 1 node type secure Windows Service Fabric Cluster with standard load balancer, NSG, Existing Subnet, and Automatic OS Upgrade
 
-[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure-Samples%2Fservice-fabric-cluster-templates%2Fmaster%2F5-VM-Windows-1-NodeType-SLB-Existing-Vnet-Auto%2FAzureDeploy.json)
-[![Visualize](http://armviz.io/visualizebutton.png)](http://armviz.io/#/?load=https%3A%2F%2Fraw.githubusercontent.com%2FAzure-Samples%2Fservice-fabric-cluster-templates%2Fmaster%2F5-VM-Windows-1-NodeType-SLB-Existing-Vnet-Auto%2FAzureDeploy.json)
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure-Samples%2Fservice-fabric-cluster-templates%2Fmaster%2F5-VM-Windows-1-NodeType-SLB-Existing-Subnet-Auto%2FAzureDeploy.json)
+[![Visualize](http://armviz.io/visualizebutton.png)](http://armviz.io/#/?load=https%3A%2F%2Fraw.githubusercontent.com%2FAzure-Samples%2Fservice-fabric-cluster-templates%2Fmaster%2F5-VM-Windows-1-NodeType-SLB-Existing-Subnet-Auto%2FAzureDeploy.json)
 
 This template allows you to deploy a secure 5 node, 1 Node Type Service Fabric Cluster with Standard load balancer running Windows Server 2022 Datacenter on a Standard_DS4_v2 Size Virtual Machine Scale set. The cluster will be deployed into an existing virtual network and subnet. The cluster will also be configured with automatic OS upgrade enabled.
 
@@ -11,7 +11,7 @@ This template allows you to deploy a secure 5 node, 1 Node Type Service Fabric C
 - Cluster Reliability Level: Silver or higher
 - Certificate Thumbprint configuration
 - Automatic OS Upgrade configuration
-- Existing Virtual Network
+- Existing Virtual Network / Subnet
 
 ## Template Resources
 
