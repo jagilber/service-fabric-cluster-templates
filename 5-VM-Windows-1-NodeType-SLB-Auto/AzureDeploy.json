@@ -408,25 +408,6 @@
                             "sourceAddressPrefixes": [],
                             "destinationAddressPrefixes": []
                         }
-                    },
-                    {
-                        "name": "SF_AllowSFExtensionToDLC",
-                        "type": "Microsoft.Network/networkSecurityGroups/securityRules",
-                        "properties": {
-                            "description": "This is required rule to allow SF Extension to connect to download center to download the cab. This rule cannot be overridden.",
-                            "protocol": "*",
-                            "sourcePortRange": "*",
-                            "destinationPortRange": "*",
-                            "sourceAddressPrefix": "*",
-                            "destinationAddressPrefix": "AzureFrontDoor.FirstParty",
-                            "access": "Allow",
-                            "priority": 502,
-                            "direction": "Outbound",
-                            "sourcePortRanges": [],
-                            "destinationPortRanges": [],
-                            "sourceAddressPrefixes": [],
-                            "destinationAddressPrefixes": []
-                        }
                     }
                 ]
             }
