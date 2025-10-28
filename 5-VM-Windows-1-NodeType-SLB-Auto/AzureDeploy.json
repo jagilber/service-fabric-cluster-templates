@@ -351,25 +351,6 @@
             "properties": {
                 "securityRules": [
                     {
-                        "name": "SF_AllowServiceFabricGatewayToLB",
-                        "type": "Microsoft.Network/networkSecurityGroups/securityRules",
-                        "properties": {
-                            "description": "This is required rule to allow SFRP to connect to the cluster. This rule cannot be overridden.",
-                            "protocol": "*",
-                            "sourcePortRange": "*",
-                            "destinationPortRange": "*",
-                            "sourceAddressPrefix": "AzureLoadBalancer",
-                            "destinationAddressPrefix": "VirtualNetwork",
-                            "access": "Allow",
-                            "priority": 501,
-                            "direction": "Inbound",
-                            "sourcePortRanges": [],
-                            "destinationPortRanges": [],
-                            "sourceAddressPrefixes": [],
-                            "destinationAddressPrefixes": []
-                        }
-                    },
-                    {
                         "name": "SF_AllowServiceFabricGatewayPorts",
                         "type": "Microsoft.Network/networkSecurityGroups/securityRules",
                         "properties": {
